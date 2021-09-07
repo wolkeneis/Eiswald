@@ -49,7 +49,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ios-resources": "cordova-res ios --skip-config --copy",
+    "android-resources": "cordova-res android --skip-config --copy"
   },
   "eslintConfig": {
     "extends": [

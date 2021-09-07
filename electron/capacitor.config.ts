@@ -11,7 +11,7 @@ const config: ElectronCapacitorConfig = {
     splashScreenEnabled: false,
     splashScreenImageName: 'splash.png',
     hideMainWindowOnLaunch: false,
-    deepLinkingEnabled: true,
+    deepLinkingEnabled: false,
     deepLinkingCustomProtocol: 'eiswald',
   }
 };
