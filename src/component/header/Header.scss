@@ -1,0 +1,39 @@
+@import '../../general';
+
+.Header {
+  background-color: var(--color-header-background);
+  padding: {
+    top: 35px;
+    bottom: 35px;
+  }
+  border-bottom: var(--color-accent) 2px solid;
+  .container {
+    width: 80%;
+    margin: {
+      left: auto;
+      right: auto;
+    }
+    .Branding {
+      @extend .button-clean;
+      float: left;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      user-select: none;
+      img {
+        position: absolute;
+        width: 3rem;
+        height: 3rem;
+        left: 110%;
+      }
+      h1 {
+        color: var(--color-header-font);
+        margin: 0;
+        span {
+          color: var(--color-accent);
+        }
+      }
+    }
+  }
+}

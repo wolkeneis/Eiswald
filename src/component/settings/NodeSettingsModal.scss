@@ -1,0 +1,27 @@
+@import '../../general';
+
+.NodeSettingsModal {
+  background: rgba(0, 0, 0, .5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .CloseButton {
+    @extend .button-clean;
+    color: var(--color-header-font);
+    right: 35px;
+    top: 15px;
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    &:hover {
+      color: red;
+      cursor: pointer;
+    }
+  }
+}

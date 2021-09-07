@@ -1,0 +1,11 @@
+@import '../../general';
+
+.Footer {
+  background: var(--color-header-background);
+  color: var(--color-header-font);
+  padding-top: 25px;
+  border-top: var(--color-accent) 2px solid;
+  min-height: 70px;
+  text-align: center;
+  margin-top: auto;
+}

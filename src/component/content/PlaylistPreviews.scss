@@ -1,0 +1,57 @@
+@import '../../general';
+
+.PlaylistPreviews {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  margin: auto;
+  padding: 2%;
+  .PlaylistPreview {
+    @extend .button-clean;
+    background: var(--color-shadow-element);
+    box-shadow: var(--box-shadow);
+    border-radius: 2rem;
+    color: var(--color-accent);
+    transform: scale(.98);
+    margin: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    img {
+      border-radius: .8rem;
+      width: calc(25vw - 2rem);
+      min-width: 100px;
+      max-width: 200px;
+      margin: 1rem;
+    }
+    span {
+      width: 80%;
+      margin: 1rem;
+      text-transform: uppercase;
+    }
+    &:hover{
+      transform: scale(1);
+    }
+  }
+}
+
+.SearchBox {
+  background: var(--color-shadow-element);
+  box-shadow: var(--box-shadow);
+  border-radius: 2rem;
+  color: var(--color-font);
+  width: 80%;
+  margin: 1rem;
+  display: flex;
+  input {
+    @extend .text-input-clean;
+    width: 100%;
+    padding: 1rem;
+  }
+  label {
+    margin: 1rem;
+  }
+}

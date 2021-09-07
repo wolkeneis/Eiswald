@@ -1,0 +1,12 @@
+@import '../general';
+
+.IconButton {
+  @extend .button-clean;
+  width: 2rem;
+  height: 2rem;
+  user-select: none;
+  img {
+    width: 2rem;
+    height: 2rem;
+  }
+}

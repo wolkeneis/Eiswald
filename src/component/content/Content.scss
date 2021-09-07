@@ -1,0 +1,23 @@
+@import '../../general';
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .VideoArea {
+    width: 100wv;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    .VideoPlayer {
+      background: var(--color-element);
+      border-radius: .75rem;
+      min-width: 35vw;
+      max-width: 720px;
+      margin: .5rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

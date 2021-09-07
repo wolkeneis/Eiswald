@@ -1,0 +1,23 @@
+@import '../../general';
+
+.Navigator {
+  display: flex;
+  align-items: center;
+  float: right;
+  margin-top: .5rem;
+  .IconButton {
+    margin: {
+      left: 1rem;
+      right: 1rem;
+    }
+  }
+  .color-picker {
+    @extend .color-picker-clean;
+    width: 2rem;
+    height: 2rem;
+    margin: {
+      left: 1rem;
+      right: 1rem;
+    }
+  }
+}
