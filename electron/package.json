@@ -2,6 +2,7 @@
   "name": "eiswald",
   "version": "1.0.0",
   "description": "eiswald",
+  "main": "build/src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wolkeneis/Eiswald.git"
@@ -11,7 +12,6 @@
   "bugs": {
     "url": "https://github.com/wolkeneis/Eiswald/issues"
   },
-  "main": "build/src/index.js",
   "homepage": "https://eiswald.onrender.com/",
   "scripts": {
     "build": "tsc && electron-rebuild",

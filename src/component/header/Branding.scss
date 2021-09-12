@@ -1,0 +1,24 @@
+@import '../../general';
+
+.Branding {
+  @extend .button-clean;
+  float: left;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  user-select: none;
+  img {
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    left: 110%;
+  }
+  h1 {
+    color: var(--color-header-font);
+    margin: 0;
+    span {
+      color: var(--color-accent);
+    }
+  }
+}

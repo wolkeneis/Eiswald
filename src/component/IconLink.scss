@@ -1,0 +1,19 @@
+@import '../general';
+
+.IconLink {
+  @extend .button-clean;
+  width: 2rem;
+  height: 2rem;
+  user-select: none;
+  img {
+    width: 2rem;
+    height: 2rem;
+    transform: scale(85%);
+    filter: grayscale(1);
+    transition: all 300ms ease;
+  }
+  &.active img {
+    transform: scale(100%);
+    filter: grayscale(0);
+  }
+}

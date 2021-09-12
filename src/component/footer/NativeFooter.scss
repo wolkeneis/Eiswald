@@ -1,0 +1,39 @@
+@import '../../general';
+
+.NativeFooter {
+  background: var(--color-header-background);
+  color: var(--color-header-font);
+  height: 4rem;
+  position: fixed;
+  overflow: hidden;
+  .NativeNavigator {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+
+@media (orientation: landscape) {
+  .NativeFooter {
+    border-left: var(--color-accent) 2px solid;
+    right: 0;
+    height: 100vh;
+    .NativeNavigator {
+      height: calc(100vh - 2rem);
+      flex-direction: column-reverse;
+    }
+  }
+}
+
+@media (orientation: portrait) {
+  .NativeFooter {
+    border-top: var(--color-accent) 2px solid;
+    bottom: 0;
+    width: 100vw;
+    .NativeNavigator {
+      width: calc(100vw - 2rem);
+      flex-direction: row;
+    }
+  }
+}

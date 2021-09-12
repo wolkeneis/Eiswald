@@ -15,21 +15,28 @@
   "dependencies": {
     "@capacitor-community/electron": "^4.0.3",
     "@capacitor/android": "^3.2.2",
+    "@capacitor/app": "^1.0.3",
     "@capacitor/cli": "^3.2.2",
+    "@capacitor/clipboard": "^1.0.3",
     "@capacitor/core": "^3.2.2",
+    "@capacitor/device": "^1.0.3",
     "@capacitor/ios": "^3.2.2",
+    "@capacitor/network": "^1.0.3",
+    "@capacitor/share": "^1.0.4",
     "@capacitor/storage": "^1.1.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "node-sass": "^6.0.1",
     "normalize.css": "^8.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-player": "^2.9.0",
     "react-redux": "^7.2.5",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-transition-group": "^4.4.2",
+    "sass": "^1.39.2",
     "socket.io-client": "^4.2.0",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
@@ -48,6 +55,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-sourceless": "set GENERATE_SOURCEMAP=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "ios-resources": "cordova-res ios --skip-config --copy",
@@ -70,5 +78,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
   }
 }

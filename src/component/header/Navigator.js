@@ -17,7 +17,6 @@ const Navigator = () => {
         imageAlt={theme === "dark-theme" ? "Sun Icon" : "Moon Icon"}
         imageSource={theme === "dark-theme" ? sun : moon}
         onClick={() => dispatch(toggleTheme())} />
-      <input aria-label="Accent Color" type="color" defaultValue="#52e056" className="color-picker" />
     </nav>
   );
 }

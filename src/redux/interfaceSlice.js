@@ -3,10 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 export const interfaceSlice = createSlice({
   name: "interface",
   initialState: {
+    native: undefined,
     theme: "dark-theme",
     nodeSettings: false
   },
   reducers: {
+    setNative: (state, action) => {
+      state.native = action.payload;
+    },
+
     selectTheme: (state, action) => {
       state.theme = action.payload;
     },
@@ -23,6 +28,7 @@ export const interfaceSlice = createSlice({
   }
 });
 
+export const { setNative } = interfaceSlice.actions;
 export const { selectTheme, toggleTheme } = interfaceSlice.actions;
 export const { showNodeSettings, hideNodeSettings } = interfaceSlice.actions;
 

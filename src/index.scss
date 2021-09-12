@@ -43,6 +43,11 @@ code {
     monospace;
 }
 
+.link {
+  color: var(--color-font);
+  text-decoration: none;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
