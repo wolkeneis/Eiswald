@@ -1,0 +1,31 @@
+@import '../../../general';
+
+.Profile {
+  background: var(--color-element);
+  border-radius: 1rem;
+  min-width: 15rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &>span {
+    color: var(--color-font);
+    margin: 1rem;
+  }
+  .ProfileInfo {
+    background: var(--color-higher-element);
+    border-radius: 1rem;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    img {
+      border-radius: 50%;
+      height: 2rem;
+    }
+    span {
+      color: var(--color-font);
+      padding-left: .5rem;
+    }
+  }
+}

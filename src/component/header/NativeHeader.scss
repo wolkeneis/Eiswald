@@ -8,14 +8,12 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  overflow: hidden;
-  .container {
+  flex-shrink: 0;
+  .primary-header {
     padding: {
       left: 10%;
     }
     transition: all 500ms ease;
-  }
-  .primary-header {
     &-enter {
       position: absolute;
       transform: translateX(-50vw);
@@ -34,6 +32,10 @@
     }
   }
   .secondary-header {
+    padding: {
+      left: 10%;
+    }
+    transition: all 500ms ease;
     &-enter {
       position: absolute;
       transform: translateX(50vw);

@@ -11,7 +11,7 @@ const NativeHeader = () => {
 
   return (
     <header className="NativeHeader">
-      <Route path="/settings/nodes" exact>
+      <Route path={["/settings/profile", "/settings/nodes"]} exact>
         {({ match }) => (
           <CSSTransition
             nodeRef={back}
@@ -19,7 +19,7 @@ const NativeHeader = () => {
             unmountOnExit
             timeout={500}
             classNames="secondary-header">
-            <div ref={back} className="container">
+            <div ref={back} className="secondary-header">
               <Link className="link" to="/settings">
                 &#8592; Back
               </Link>
@@ -27,7 +27,7 @@ const NativeHeader = () => {
           </CSSTransition>
         )}
       </Route>
-      <Route path={["/", "/downloads", "/settings"]} exact>
+      <Route path={["/", "/downloads", "/settings", "/authorize"]} exact>
         {({ match }) => (
           <CSSTransition
             nodeRef={branding}
@@ -35,7 +35,7 @@ const NativeHeader = () => {
             unmountOnExit
             timeout={500}
             classNames="primary-header">
-            <div ref={branding} className="container">
+            <div ref={branding} className="primary-header">
               <Branding />
             </div>
           </CSSTransition>

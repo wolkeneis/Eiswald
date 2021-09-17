@@ -16,13 +16,14 @@ const PlaylistPreviews = ({ nodes }) => {
     for (const host in nodes) {
       if (Object.hasOwnProperty.call(nodes, host)) {
         const node = nodes[host];
-        fetchPlaylists(node)
-          .then(response => response.json())
-          .then(fetchedPreviews => fetchedPreviews.playlists)
-          .then(fetchedPreviews => {
-            fetchedPreviews.forEach(fetchedPreview => fetchedPreview.node = node.origin);
-            dispatch(addPlaylistPreviews(fetchedPreviews));
-          });
+        if (node.state !== "maintenance") {
+          fetchPlaylists(node)
+            .then(response => response.json())
+            .then(fetchedPreviews => {
+              fetchedPreviews.forEach(fetchedPreview => fetchedPreview.node = node.origin);
+              dispatch(addPlaylistPreviews(fetchedPreviews));
+            });
+        }
       }
     }
     return () => {
@@ -108,6 +109,7 @@ const PlaylistPreview = ({ node, playlistPreview }) => {
       fetchPlaylist(node, playlistPreview.key)
         .then(response => response.json())
         .then(fetchedPlaylist => {
+          fetchedPlaylist.node = node.origin;
           dispatch(setPlaylist(fetchedPlaylist));
           dispatch(selectPlaylist(fetchedPlaylist));
         });

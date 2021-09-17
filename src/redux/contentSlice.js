@@ -26,6 +26,8 @@ export const contentSlice = createSlice({
     },
     setNodeState: (state, action) => {
       state.nodes[action.payload.origin].state = action.payload.state;
+      state.nodes[action.payload.origin].name = action.payload.name;
+      state.nodes[action.payload.origin].profile = action.payload.profile;
     },
 
     setPlaylistPreviews: (state, action) => {

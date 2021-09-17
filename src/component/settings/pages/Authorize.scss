@@ -1,0 +1,36 @@
+@import '../../../general';
+
+.Authorize {
+  margin: 5rem;
+  padding: 1rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h3 {
+    color: var(--color-font);
+  }
+  p {
+    color: var(--color-font);
+  }
+  .AuthorizeButtons {
+    display: flex;
+    align-items: center;
+    .AllowButton {
+      @extend .button-clean;
+      background: hsl(28, 81%, 50%);
+      border-radius: .5rem;
+      color: var(--color-font);
+      margin: 1rem;
+      padding: 1rem;
+    }
+    .DenyButton {
+      @extend .button-clean;
+      background: hsl(3, 78%, 55%);
+      border-radius: .5rem;
+      color: var(--color-font);
+      margin: 1rem;
+      padding: 1rem;
+    }
+  }
+}

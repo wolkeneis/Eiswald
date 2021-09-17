@@ -5,13 +5,14 @@
   flex-flow: row wrap;
   justify-content: space-around;
   margin: auto;
-  padding: 2%;
+  padding: 5%;
   .PlaylistPreview {
     @extend .button-clean;
     background: var(--color-shadow-element);
     box-shadow: var(--box-shadow);
     border-radius: 2rem;
     color: var(--color-accent);
+    max-width: 80vw;
     transform: scale(.98);
     margin: 2rem;
     padding: 2rem;
@@ -53,5 +54,11 @@
   }
   label {
     margin: 1rem;
+  }
+}
+
+@media (orientation: portrait) {
+  .SearchBox {
+    width: 60%;
   }
 }

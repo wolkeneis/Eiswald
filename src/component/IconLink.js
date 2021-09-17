@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import "./IconLink.scss";
 
-const IconLink = ({ linkName, imageAlt, imageSource, destination }) => {
+const IconLink = ({ children, linkName, imageAlt, imageSource, destination }) => {
   return (
     <NavLink
       aria-label={linkName}
@@ -10,6 +10,7 @@ const IconLink = ({ linkName, imageAlt, imageSource, destination }) => {
       exact
       to={destination}>
       <img alt={imageAlt} src={imageSource} />
+      {children}
     </NavLink>
   );
 }

@@ -2,6 +2,7 @@ import { Device } from '@capacitor/device';
 import { Storage } from "@capacitor/storage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import "./App.scss";
 import Content from "./component/content/Content";
@@ -10,7 +11,8 @@ import Footer from "./component/footer/Footer";
 import NativeFooter from "./component/footer/NativeFooter";
 import Header from "./component/header/Header";
 import NativeHeader from "./component/header/NativeHeader";
-import NodeSettingsModal from "./component/settings/NodeSettingsModal";
+import QueryRedirect from './component/QueryRedirect';
+import Authorize from './component/settings/pages/Authorize';
 import { selectTheme, setNative } from "./redux/interfaceSlice";
 
 function App() {
@@ -20,7 +22,8 @@ function App() {
 
   useEffect(() => {
     Device.getInfo().then(info => {
-      dispatch(setNative(info.operatingSystem === 'ios' || info.operatingSystem === 'android'));
+      dispatch(setNative(info.operatingSystem === 'ios' || info.operatingSystem === 'android'));// ADD THIS !!!
+      //dispatch(setNative(true)); // REMOVE THIS !!!
     });
     Storage.get({ key: "theme" }).then(theme => {
       if (theme.value) {
@@ -38,19 +41,39 @@ function App() {
   return (
     <div className={`App ${theme} ${native ? 'native' : ''}`}>
       <BrowserRouter>
-        {native !== undefined && (native
-          ? (<>
-            <NativeHeader />
-            <NativeContent />
-            <NativeFooter />
-          </>)
-          : (<>
-            <Header />
-            <NodeSettingsModal />
-            <Content />
-            <Footer />
-          </>))
-        }
+        <Switch>
+          <QueryRedirect exact from="/redirect/profile" to="/settings/profile" />
+          <QueryRedirect exact from="/redirect/nodes" to="/settings/nodes" />
+          <QueryRedirect exact from="/redirect/authorize" to="/authorize" />
+          <Route path="/authorize"
+            children={({ match }) => {
+              return native !== undefined && (native
+                ? (<>
+                  <NativeHeader />
+                  <Authorize match={match} />
+                </>)
+                : (<>
+                  <Header />
+                  <Authorize match={match} />
+                </>))
+            }}>
+
+          </Route>
+          <Route path="/">
+            {native !== undefined && (native
+              ? (<>
+                <NativeHeader />
+                <NativeContent />
+                <NativeFooter />
+              </>)
+              : (<>
+                <Header />
+                <Content />
+                <Footer />
+              </>))
+            }
+          </Route>
+        </Switch>
 
       </BrowserRouter>
     </div>

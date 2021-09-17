@@ -16,6 +16,7 @@
   --box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .2);
   --color-font: #ffffff;
   --color-font-hover: #aaaaaa;
+  transition: background-color 1000ms ease, color 1000ms ease;
 }
 
 .light-theme {
@@ -27,6 +28,7 @@
   --box-shadow: 0 0 10px 10px rgba(.2, .2, .2, .2);
   --color-font: #000000;
   --color-font-hover: #222222;
+  transition: background-color 1000ms ease, color 1000ms ease;
 }
 
 body {
@@ -45,7 +47,11 @@ code {
 
 .link {
   color: var(--color-font);
+  cursor: pointer;
+  outline: none;
   text-decoration: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::-webkit-scrollbar {

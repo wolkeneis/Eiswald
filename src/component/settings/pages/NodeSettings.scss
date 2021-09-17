@@ -1,0 +1,144 @@
+@import '../../../general';
+
+.NodePreview {
+  background: var(--color-element);
+  border-radius: 1rem;
+  min-width: 16.5rem;
+  margin: 2rem;
+  input {
+    @extend .text-input-clean;
+    background: var(--color-higher-element);
+    border-radius: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem;
+  }
+  .preview-state {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    span {
+      color: var(--color-font);
+      padding-left: .75rem;
+    }
+    .traffic-light {
+      border-radius: .5rem;
+      width: 2rem;
+      height: 2rem;
+      transition: background-color .5s ease;
+      &.available {
+        background: green;
+      }
+      &.unauthenticated {
+        background: yellow;
+      }
+      &.unauthorized {
+        background: red;
+      }
+      &.maintenance {
+        background: skyblue;
+      }
+      &.unavailable {
+        background: #222222;
+      }
+    }
+    .AddButton {
+      @extend .button-clean;
+      background: var(--color-higher-element);
+      color: var(--color-font);
+      border-radius: .5rem;
+      height: 2rem;
+      width: 4rem;
+      &:hover {
+        color: lightgreen;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.Node {
+  background: var(--color-element);
+  border-radius: 1rem;
+  min-width: 16.5rem;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  a {
+    @extend .link-clean;
+    margin: 1rem;
+  }
+  .Node-origin {
+    background: var(--color-higher-element);
+    border-radius: 1rem;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    span {
+      color: var(--color-font);
+    }
+  }
+  .Node-profile {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    img {
+      border-radius: 50%;
+      height: 2rem;
+    }
+    span {
+      color: var(--color-font);
+      padding-left: .5rem;
+    }
+  }
+  .Node-state {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    span {
+      color: var(--color-font);
+      padding-left: .75rem;
+    }
+    .traffic-light {
+      border-radius: .5rem;
+      width: 2rem;
+      height: 2rem;
+      transition: background-color .5s ease;
+      &.available {
+        background: green;
+      }
+      &.unauthenticated {
+        background: yellow;
+      }
+      &.unauthorized {
+        background: red;
+      }
+      &.maintenance {
+        background: skyblue;
+      }
+      &.unavailable {
+        background: #222222;
+      }
+    }
+    .Node-remove {
+      @extend .button-clean;
+      background: var(--color-higher-element);
+      color: var(--color-font);
+      border-radius: .5rem;
+      height: 2rem;
+      width: 4rem;
+      margin-left: auto;
+      &:hover {
+        color: red;
+        cursor: pointer;
+      }
+    }
+  }
+}

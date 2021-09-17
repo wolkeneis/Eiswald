@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAvatar, nodeStateClass, nodeStateText } from "../../logic/node";
-import { addNode, removeNode, setNodeState } from "../../redux/contentSlice";
+import { fetchAvatar, nodeStateClass, nodeStateText } from "../../../logic/node";
+import { addNode, removeNode, setNodeState } from "../../../redux/contentSlice";
 import "./NodeSettings.scss";
 
 const NodeSettings = () => {
@@ -20,32 +20,44 @@ const NodeSettings = () => {
         try {
           fetch(new Request(node.origin))
             .then(response => response.json())
-            .then(data => ({
-              authenticated: data.authenticated,
-              profile: {
-                name: data.session.username,
-                avatar: data.session.avatar,
-                authorized: data.session.authorized
-              }
-            }))
-            .then(state => {
-              if (nodeStateClass(node) !== nodeStateClass({ state: state })) {
-                dispatch(setNodeState({
-                  origin: node.origin,
-                  state: state
-                }));
-              }
-            }
-            ).catch(error => {
+            .then(nodeInfo => {
+              fetch(new Request(`${node.origin}/profile`, {
+                credentials: "include",
+                redirect: "manual"
+              }))
+                .then(response => response.json())
+                .then(profile => {
+                  const patchedNode = {
+                    origin: node.origin,
+                    state: nodeInfo.state,
+                    name: nodeInfo.name,
+                    profile: profile
+                  }
+                  if (nodeStateClass(node) !== nodeStateClass(patchedNode)) {
+                    dispatch(setNodeState(patchedNode));
+                  }
+                }).catch(() => {
+                  dispatch(setNodeState({
+                    origin: node.origin,
+                    state: nodeInfo.state,
+                    name: nodeInfo.name,
+                    profile: null
+                  }));
+                });
+            }).catch(() => {
               dispatch(setNodeState({
                 origin: node.origin,
-                state: undefined
+                state: null,
+                name: null,
+                profile: null
               }));
             });
         } catch {
           dispatch(setNodeState({
             origin: node.origin,
-            state: undefined
+            state: null,
+            name: null,
+            profile: null
           }));
         }
       }
@@ -56,21 +68,30 @@ const NodeSettings = () => {
     try {
       fetch(new Request(origin))
         .then(response => response.json())
-        .then(data => ({
-          authenticated: data.authenticated,
-          profile: {
-            name: data.session.username,
-            avatar: data.session.avatar,
-            authorized: data.session.authorized
-          }
-        }))
-        .then(state => {
-          setNode({
-            origin: origin,
-            state: state
-          });
+        .then(nodeInfo => {
+          fetch(new Request(`${origin}/profile`, {
+            credentials: "include",
+            redirect: "manual"
+          }))
+            .then(response => response.json())
+            .then(profile => {
+              const patchedNode = {
+                origin: origin,
+                state: nodeInfo.state,
+                name: nodeInfo.name,
+                profile: profile
+              }
+              setNode(patchedNode);
+            }).catch(() => {
+              setNode({
+                origin: origin,
+                state: nodeInfo.state,
+                name: nodeInfo.name,
+                profile: null
+              });
+            });
         }
-        ).catch(error => { });
+        ).catch(() => { });
     } catch { }
     return () => {
       setNode();
@@ -93,15 +114,15 @@ const NodeSettings = () => {
   }
 
   return (
-    <div className="NodeSettings">
+    <>
       <h1>Node Settings</h1>
+      <NodePreview inputField={inputField} node={node} onChange={onChange} onAdd={onAdd} />
       {Object.values(nodes).map(node => (
         <Suspense key={node.origin}>
           <Node node={node} />
         </Suspense>
       ))}
-      <NodePreview inputField={inputField} node={node} onChange={onChange} onAdd={onAdd} />
-    </div>
+    </>
   );
 }
 
@@ -144,8 +165,8 @@ const Node = ({ node }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (node.state && node.state.profile && node.state.profile.avatar) {
-      setSource(fetchAvatar(node.state.profile.avatar));
+    if (node.profile && node.profile.avatar) {
+      setSource(fetchAvatar(node.profile.avatar));
     }
   }, [node]);
 
@@ -162,13 +183,18 @@ const Node = ({ node }) => {
   return (
     <div className="Node">
       <div className="Node-origin">
-        <span>{node.origin}</span>
+        <span>{node.name ?? node.origin}</span>
       </div>
-      {node.state && node.state.profile && node.state.profile.name && node.state.profile.avatar &&
-        <div className="Node-profile">
-          <img alt="Avatar" src={source && source.read()} />
-          <span>{node.state.profile.name}</span>
-        </div>
+      {node.profile && node.profile.avatar
+        ? <>
+          <div className="Node-profile">
+            <img alt="Avatar" src={source && source.read()} />
+            <span>{node.profile.username}</span>
+          </div>
+        </>
+        : <>
+          <a href={`${node.origin}/authenticate`}>Login</a>
+        </>
       }
       <div className="Node-state">
         <div className={`traffic-light ${nodeStateClass(node)}`}></div>

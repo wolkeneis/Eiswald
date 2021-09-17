@@ -1,10 +1,9 @@
 @import '../general';
 
 .IconLink {
-  @extend .button-clean;
+  @extend .link-clean;
   width: 2rem;
   height: 2rem;
-  user-select: none;
   img {
     width: 2rem;
     height: 2rem;
