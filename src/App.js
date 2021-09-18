@@ -22,8 +22,26 @@ function App() {
 
   useEffect(() => {
     Device.getInfo().then(info => {
-      dispatch(setNative(info.operatingSystem === 'ios' || info.operatingSystem === 'android'));// ADD THIS !!!
-      //dispatch(setNative(true)); // REMOVE THIS !!!
+      const native = info.operatingSystem === 'ios' || info.operatingSystem === 'android';
+      dispatch(setNative(native));
+      if (native) {
+        const queryList = window.matchMedia("(orientation: portrait)");
+        queryList.addEventListener("change", event => {
+          const video = document.querySelector("video");
+          if (video) {
+            if (event.matches) {
+              if (document.fullscreenElement === video) {
+                document.exitFullscreen();
+              }
+            }
+            else {
+              if (document.fullscreenElement !== video) {
+                video.requestFullscreen();
+              }
+            }
+          }
+        });
+      }
     });
     Storage.get({ key: "theme" }).then(theme => {
       if (theme.value) {
