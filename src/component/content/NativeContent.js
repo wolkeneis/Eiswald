@@ -127,6 +127,7 @@ const NativeContent = () => {
                       url={source}
                       width="100%"
                       height=""
+                      controls
                     />
                     <div className="VideoControls">
 
