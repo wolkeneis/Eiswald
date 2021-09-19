@@ -5,7 +5,7 @@ import back from "../../media/back.svg";
 import settings from "../../media/settings.svg";
 import IconButton from "../IconButton";
 import Loader from "../Loader";
-import Settings, { BackButton } from "../settings/Settings";
+import Settings, { BackButton } from "../settings/pages/Settings";
 import SettingsPage from "../settings/SettingsPage";
 import "./Navigator.scss";
 

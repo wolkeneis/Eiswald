@@ -1,8 +1,8 @@
-import { Route, Switch } from 'react-router';
+import { Route, Switch } from "react-router";
 import download from "../../media/download.svg";
 import list from "../../media/list.svg";
 import settings from "../../media/settings.svg";
-import IconLink from '../IconLink';
+import IconLink from "../IconLink";
 import "./NativeFooter.scss";
 
 const NativeFooter = () => {

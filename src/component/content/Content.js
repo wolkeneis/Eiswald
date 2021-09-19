@@ -1,16 +1,13 @@
 import { Storage } from "@capacitor/storage";
-import { useEffect, useRef } from "react";
-import ReactPlayer from "react-player/lazy";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNodes } from "../../redux/contentSlice";
 import "./Content.scss";
-import EpisodeList from "./EpisodeList";
 import PlaylistPreviews from "./PlaylistPreviews";
+import VideoArea from "./VideoArea";
 
 const Content = () => {
   const nodes = useSelector(state => state.content.nodes);
-  const source = useSelector(state => state.content.source);
-  const videoContainer = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,23 +26,7 @@ const Content = () => {
 
   return (
     <div className="Content">
-      <div className="VideoArea">
-        {source &&
-          <div ref={videoContainer} className="VideoPlayer">
-            <ReactPlayer
-              className="react-player"
-              url={source}
-              width="100%"
-              height=""
-              controls
-            />
-            <div className="VideoControls">
-
-            </div>
-          </div>
-        }
-        <EpisodeList nodes={nodes ?? {}} />
-      </div>
+      <VideoArea />
       <PlaylistPreviews nodes={nodes ?? {}} />
     </div>
   );

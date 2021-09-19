@@ -8,6 +8,7 @@ import "./EpisodeList.scss";
 
 const EpisodeList = () => {
   const [seasons, setSeasons] = useState();
+  const native = useSelector(state => state.interface.native);
   const playlist = useSelector(state => state.content.playlist);
   const availabilities = useSelector(state => state.content.availabilities);
   const language = useSelector(state => state.content.language);
@@ -57,7 +58,7 @@ const EpisodeList = () => {
   return (
     <>
       {playlist &&
-        <div ref={episodeList} className="EpisodeList">
+        <div ref={episodeList} className={native ? "NativeEpisodeList" : "EpisodeList"}>
           {seasons && availabilities && language !== undefined && season !== undefined &&
             <>
               <ListHeader playlist={playlist} seasons={seasons} availabilities={availabilities} language={language} season={season} />

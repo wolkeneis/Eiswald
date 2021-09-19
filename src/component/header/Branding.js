@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import logo from "../../media/logo_snow.svg";
-import './Branding.scss';
+import "./Branding.scss";
 
 const Branding = () => {
   return (

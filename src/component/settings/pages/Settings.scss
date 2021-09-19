@@ -1,6 +1,6 @@
-@import '../../general';
+@import '../../../general';
 
-.NativeSettingsItem {
+.SettingsItem {
   @extend .link-clean;
   background: var(--color-element);
   border-radius: 1rem;

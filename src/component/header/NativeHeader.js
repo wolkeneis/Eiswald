@@ -1,9 +1,9 @@
-import { useRef } from 'react';
-import { Route } from 'react-router';
-import { Link } from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group';
-import Branding from './Branding';
-import './NativeHeader.scss';
+import { useRef } from "react";
+import { Route } from "react-router";
+import { Link } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
+import Branding from "./Branding";
+import "./NativeHeader.scss";
 
 const NativeHeader = () => {
   const back = useRef();

@@ -193,7 +193,9 @@ const Node = ({ node }) => {
           </div>
         </>
         : <>
-          <a href={`${node.origin}/authenticate`}>Login</a>
+          {node.state && node.state !== "maintenance" &&
+            <a href={`${node.origin}/authenticate`}>Login</a>
+          }
         </>
       }
       <div className="Node-state">

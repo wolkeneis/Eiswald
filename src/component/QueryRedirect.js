@@ -1,4 +1,4 @@
-import { Redirect, useLocation } from 'react-router';
+import { Redirect, useLocation } from "react-router";
 
 const QueryRedirect = ({ children, to, ...props }) => {
   const { search } = useLocation();

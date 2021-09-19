@@ -1,24 +1,21 @@
 import { Storage } from "@capacitor/storage";
 import { lazy, Suspense, useEffect, useRef } from "react";
-import ReactPlayer from "react-player/lazy";
 import { useDispatch, useSelector } from "react-redux";
 import { Route } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import { setNodes } from "../../redux/contentSlice";
 import Loader from "../Loader";
-import NativeSettings from "../settings/NativeSettings";
+import Settings from "../settings/pages/Settings";
 import { NativeSettingsPage } from "../settings/SettingsPage";
 import "./NativeContent.scss";
-import NativeEpisodeList from "./NativeEpisodeList";
 import PlaylistPreviews from "./PlaylistPreviews";
+import VideoArea from "./VideoArea";
 
 const ProfileSettings = lazy(() => import("../settings/pages/ProfileSettings"));
 const NodeSettings = lazy(() => import("../settings/pages/NodeSettings"));
 
 const NativeContent = () => {
   const nodes = useSelector(state => state.content.nodes);
-  const source = useSelector(state => state.content.source);
-  const videoContainer = useRef();
   const profileRef = useRef();
   const nodesRef = useRef();
   const settingsRef = useRef();
@@ -89,7 +86,7 @@ const NativeContent = () => {
             <div ref={settingsRef} className="content-menu">
               <NativeSettingsPage>
                 <Suspense fallback={<Loader />}>
-                  <NativeSettings />
+                  <Settings />
                 </Suspense>
               </NativeSettingsPage>
             </div>
@@ -119,23 +116,7 @@ const NativeContent = () => {
             timeout={500}
             classNames="content-menu">
             <div ref={homeRef} className="content-menu">
-              <div className="VideoArea">
-                {source &&
-                  <div ref={videoContainer} className="VideoPlayer">
-                    <ReactPlayer
-                      className="react-player"
-                      url={source}
-                      width="100%"
-                      height=""
-                      controls
-                    />
-                    <div className="VideoControls">
-
-                    </div>
-                  </div>
-                }
-                <NativeEpisodeList nodes={nodes ?? {}} />
-              </div>
+              <VideoArea />
               <PlaylistPreviews nodes={nodes ?? {}} />
             </div>
           </CSSTransition>

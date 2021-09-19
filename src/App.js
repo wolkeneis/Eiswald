@@ -1,19 +1,21 @@
-import { Device } from '@capacitor/device';
+import { Device } from "@capacitor/device";
 import { Storage } from "@capacitor/storage";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 import "./App.scss";
-import Content from "./component/content/Content";
-import NativeContent from "./component/content/NativeContent";
-import Footer from "./component/footer/Footer";
-import NativeFooter from "./component/footer/NativeFooter";
-import Header from "./component/header/Header";
-import NativeHeader from "./component/header/NativeHeader";
-import QueryRedirect from './component/QueryRedirect';
-import Authorize from './component/settings/pages/Authorize';
+import Loader from "./component/Loader";
+import QueryRedirect from "./component/QueryRedirect";
 import { selectTheme, setNative } from "./redux/interfaceSlice";
+
+const Content = lazy(() => import("./component/content/Content"));
+const NativeContent = lazy(() => import("./component/content/NativeContent"));
+const Footer = lazy(() => import("./component/footer/Footer"));
+const NativeFooter = lazy(() => import("./component/footer/NativeFooter"));
+const Header = lazy(() => import("./component/header/Header"));
+const NativeHeader = lazy(() => import("./component/header/NativeHeader"));
+const Authorize = lazy(() => import("./component/settings/pages/Authorize"));
 
 function App() {
   const native = useSelector(state => state.interface.native);
@@ -22,7 +24,7 @@ function App() {
 
   useEffect(() => {
     Device.getInfo().then(info => {
-      const native = info.operatingSystem === 'ios' || info.operatingSystem === 'android';
+      const native = info.operatingSystem === "ios" || info.operatingSystem === "android";
       dispatch(setNative(native));
       if (native) {
         const queryList = window.matchMedia("(orientation: portrait)");
@@ -56,8 +58,9 @@ function App() {
     }
   }, [theme]);
 
+
   return (
-    <div className={`App ${theme} ${native ? 'native' : ''}`}>
+    <div className={`App ${theme} ${native ? "native" : ""}`}>
       <BrowserRouter>
         <Switch>
           <QueryRedirect exact from="/redirect/profile" to="/settings/profile" />
@@ -67,12 +70,16 @@ function App() {
             children={({ match }) => {
               return native !== undefined && (native
                 ? (<>
-                  <NativeHeader />
-                  <Authorize match={match} />
+                  <Suspense fallback={<Loader />}>
+                    <NativeHeader />
+                    <Authorize match={match} />
+                  </Suspense>
                 </>)
                 : (<>
-                  <Header />
-                  <Authorize match={match} />
+                  <Suspense fallback={<Loader />}>
+                    <Header />
+                    <Authorize match={match} />
+                  </Suspense>
                 </>))
             }}>
 
@@ -80,19 +87,22 @@ function App() {
           <Route path="/">
             {native !== undefined && (native
               ? (<>
-                <NativeHeader />
-                <NativeContent />
-                <NativeFooter />
+                <Suspense fallback={<Loader />}>
+                  <NativeHeader />
+                  <NativeContent />
+                  <NativeFooter />
+                </Suspense>
               </>)
               : (<>
-                <Header />
-                <Content />
-                <Footer />
+                <Suspense fallback={<Loader />}>
+                  <Header />
+                  <Content />
+                  <Footer />
+                </Suspense>
               </>))
             }
           </Route>
         </Switch>
-
       </BrowserRouter>
     </div>
   );

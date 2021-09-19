@@ -1,4 +1,4 @@
-import Branding from './Branding';
+import Branding from "./Branding";
 import "./Header.scss";
 import Navigator from "./Navigator";
 

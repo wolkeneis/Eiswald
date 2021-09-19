@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import moon from "../../media/moon.svg";
-import nodes from "../../media/nodes.svg";
-import profile from "../../media/profile.svg";
-import sun from "../../media/sun.svg";
-import { toggleTheme } from "../../redux/interfaceSlice";
+import moon from "../../../media/moon.svg";
+import nodes from "../../../media/nodes.svg";
+import profile from "../../../media/profile.svg";
+import sun from "../../../media/sun.svg";
+import { toggleTheme } from "../../../redux/interfaceSlice";
 import "./Settings.scss";
 
 const Settings = () => {
