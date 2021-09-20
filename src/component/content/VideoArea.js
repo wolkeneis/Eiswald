@@ -5,12 +5,13 @@ import EpisodeList from "./EpisodeList";
 import "./VideoArea.scss";
 
 const VideoArea = () => {
+  const native = useSelector(state => state.interface.native);
   const nodes = useSelector(state => state.content.nodes);
   const source = useSelector(state => state.content.source);
   const videoContainer = useRef();
 
   return (
-    <div className="VideoArea">
+    <div className={native ? "NativeVideoArea" : "VideoArea"}>
       {source &&
         <div ref={videoContainer} className="VideoPlayer">
           <ReactPlayer
