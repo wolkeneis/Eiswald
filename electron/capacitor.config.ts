@@ -1,7 +1,7 @@
 import { ElectronCapacitorConfig } from '@capacitor-community/electron';
 
 const config: ElectronCapacitorConfig = {
-  appId: 'net.wolkeneis.eiswald',
+  appId: 'dev.wolkeneis.eiswald',
   appName: 'eiswald',
   webDir: 'build',
   bundledWebRuntime: false,

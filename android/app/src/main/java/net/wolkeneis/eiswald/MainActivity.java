@@ -1,4 +1,4 @@
-package net.wolkeneis.eiswald;
+package dev.wolkeneis.eiswald;
 
 import com.getcapacitor.BridgeActivity;
 
