@@ -1,39 +1,18 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { fetchAvatar } from "../../../logic/profile";
+import { Suspense, useEffect, useState } from "react";
+import { fetchAvatar, fetchProfile } from "../../../logic/profile";
+import Loader from "../../Loader";
 import ProfileConnections from "./ProfileConnections";
 import "./ProfileSettings.scss";
 
+
 const ProfileSettings = () => {
   const [profile, setProfile] = useState();
-  const [connections, setConnections] = useState();
 
   useEffect(() => {
-    try {
-      fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile`, {
-        method: "POST",
-        credentials: "include",
-        redirect: "manual"
-      }))
-        .then(response => response.json())
-        .then(profile => {
-          setProfile(profile);
-          fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/connections`, {
-            method: "POST",
-            credentials: "include",
-            redirect: "manual"
-          }))
-            .then(response => response.json())
-            .then(connections => {
-              setConnections(connections);
-            })
-            .catch(() => { });
-        })
-        .catch(() => { });
-    } catch { }
+    setProfile(fetchProfile());
     return () => {
       setProfile();
-      setConnections();
     }
   }, []);
 
@@ -42,7 +21,7 @@ const ProfileSettings = () => {
       <h1>Profile</h1>
       <div className="Profile">
         {profile
-          ? <Profile profile={profile} />
+          ? <Profile profile={profile && profile.read()} />
           : <span>Du bist nicht angemeldet</span>
         }
       </div>
@@ -50,7 +29,9 @@ const ProfileSettings = () => {
         ? <h3>Connections</h3>
         : <></>
       }
-      <ProfileConnections connections={connections} loggedIn={profile ? true : false} />
+      <Suspense fallback={<Loader />}>
+        <ProfileConnections loggedIn={profile ? true : false} />
+      </Suspense>
     </>
   );
 }

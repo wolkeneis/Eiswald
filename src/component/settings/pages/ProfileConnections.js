@@ -1,28 +1,39 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { fetchAvatar, providers } from "../../../logic/profile";
+import { fetchAvatar, fetchProfileConnections, providers } from "../../../logic/profile";
+import Loader from "../../Loader";
 import "./ProfileConnections.scss";
 
-const ProfileConnections = ({ connections, loggedIn }) => {
+const ProfileConnections = ({ loggedIn }) => {
+  const [connections, setConnections] = useState();
+
+  useEffect(() => {
+    setConnections(fetchProfileConnections());
+    return () => {
+      setConnections();
+    }
+  }, []);
+
   return (
-    <div className="ProfileConnections">
-      {providers.map(provider => {
-        if (connections[provider.id]) {
-          return (<Connection key={provider.id} provider={provider} connection={connections[provider.id]} loggedIn={loggedIn} />)
-        } else {
-          return (<Connection key={provider.id} provider={provider} loggedIn={loggedIn} />)
-        }
-      })}
-    </div>
+    <>
+      {connections
+        ? connections.read() &&
+        <div className="ProfileConnections">
+          {providers.map(provider => {
+            if (connections.read()[provider.id]) {
+              return (<Connection key={provider.id} provider={provider} connection={connections.read()[provider.id]} loggedIn={loggedIn} />)
+            } else {
+              return (<Connection key={provider.id} provider={provider} loggedIn={loggedIn} />)
+            }
+          })}
+        </div>
+        : <Loader />
+      }
+    </>
   );
 }
 
-ProfileConnections.defaultProps = {
-  connections: {}
-}
-
 ProfileConnections.propTypes = {
-  connections: PropTypes.object,
   loggedIn: PropTypes.bool
 }
 

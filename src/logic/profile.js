@@ -25,8 +25,28 @@ function fetchAvatar(avatar) {
     .then(image => URL.createObjectURL(image)));
 }
 
+function fetchProfile() {
+  return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile`, {
+    method: "POST",
+    credentials: "include",
+    redirect: "manual"
+  }))
+    .then(response => response.json())
+    .then(profile => profile));
+}
+
+function fetchProfileConnections() {
+  return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/connections`, {
+    method: "POST",
+    credentials: "include",
+    redirect: "manual"
+  }))
+    .then(response => response.json())
+    .then(connections => connections));
+}
+
 
 
 export { providers };
-export { fetchAvatar };
+export { fetchAvatar, fetchProfile, fetchProfileConnections };
 
