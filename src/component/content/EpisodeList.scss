@@ -151,7 +151,7 @@
   overflow-x: hidden;
   .Episode {
     background: linear-gradient(to right, red 100%, transparent), linear-gradient(to right, var(--color-element) 100%, transparent);
-    background-size: 0% 3px, 100% 100%;
+    background-size: 0% 2px, 100% 100%;
     background-repeat: no-repeat;
     background-position: 0 100%, 0 0;
     border-radius: 1rem;
@@ -183,6 +183,9 @@
       color: var(--color-font);
       margin: 1rem;
       font-weight: lighter;
+    }
+    &.selected {
+      filter: brightness(1.2);
     }
     &.unavailable button {
       color: var(--color-font-hover);
