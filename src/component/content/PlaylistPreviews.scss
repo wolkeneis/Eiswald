@@ -24,12 +24,14 @@
     img {
       border-radius: .8rem;
       width: calc(25vw - 2rem);
-      min-width: 100px;
+      min-width: 120px;
       max-width: 200px;
       margin: 1rem;
     }
     span {
-      width: 80%;
+      width: calc(25vw - 2rem);
+      min-width: 120px;
+      max-width: 200px;
       margin: 1rem;
       text-transform: uppercase;
     }
