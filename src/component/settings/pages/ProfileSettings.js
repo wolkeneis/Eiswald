@@ -20,7 +20,7 @@ const ProfileSettings = () => {
     <>
       <h1>Profile</h1>
       <div className="Profile">
-        {profile
+        {profile && profile.read()
           ? <Profile profile={profile && profile.read()} />
           : <span>Du bist nicht angemeldet</span>
         }

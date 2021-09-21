@@ -17,10 +17,9 @@ const ProfileConnections = ({ loggedIn }) => {
   return (
     <>
       {connections
-        ? connections.read() &&
-        <div className="ProfileConnections">
+        ? <div className="ProfileConnections">
           {providers.map(provider => {
-            if (connections.read()[provider.id]) {
+            if (connections.read() && connections.read()[provider.id]) {
               return (<Connection key={provider.id} provider={provider} connection={connections.read()[provider.id]} loggedIn={loggedIn} />)
             } else {
               return (<Connection key={provider.id} provider={provider} loggedIn={loggedIn} />)

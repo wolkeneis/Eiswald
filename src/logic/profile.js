@@ -32,7 +32,8 @@ function fetchProfile() {
     redirect: "manual"
   }))
     .then(response => response.json())
-    .then(profile => profile));
+    .then(profile => profile)
+    .catch(() => { }));
 }
 
 function fetchProfileConnections() {
@@ -42,7 +43,8 @@ function fetchProfileConnections() {
     redirect: "manual"
   }))
     .then(response => response.json())
-    .then(connections => connections));
+    .then(connections => connections)
+    .catch(() => { }));
 }
 
 
