@@ -9,7 +9,6 @@ import Loader from "./component/Loader";
 import QueryRedirect from "./component/QueryRedirect";
 import { joinRoom } from "./logic/connection";
 import { selectTheme, setNative } from "./redux/interfaceSlice";
-import { isTouchDevice } from "./logic/utils";
 
 const Content = lazy(() => import("./component/content/Content"));
 const NativeContent = lazy(() => import("./component/content/NativeContent"));
@@ -26,7 +25,7 @@ function App() {
 
   useEffect(() => {
     Device.getInfo().then(info => {
-      const native = info.operatingSystem === "ios" || info.operatingSystem === "android" || isTouchDevice();
+      const native = info.operatingSystem === "ios" || info.operatingSystem === "android";
       dispatch(setNative(native));
       if (!Element.prototype.requestFullscreen) {
         Element.prototype.requestFullscreen = Element.prototype.mozRequestFullscreen || Element.prototype.mozRequestFullScreen || Element.prototype.webkitRequestFullscreen || Element.prototype.msRequestFullscreen;
