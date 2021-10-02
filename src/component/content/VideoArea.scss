@@ -22,6 +22,9 @@
     &.native {
       background: none;
       max-width: 480px;
+      .VideoWrapper {
+        background: var(--color-element);
+      }
     }
     .VideoWrapper {
       position: relative;
