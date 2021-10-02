@@ -1,15 +1,18 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { sync } from "../../logic/connection";
 import { languageAlt, languageImage, seasonName } from "../../logic/node";
-import play from "../../media/play.svg";
-import { setDefaults, setEpisode, setLanguage, setSeason, setSource } from "../../redux/contentSlice";
+import { isElementInViewport } from "../../logic/utils";
+import playIcon from "../../media/play.svg";
+import { setDefaults, setEpisode, setLanguage, setSeason, setSeasons } from "../../redux/contentSlice";
+import { play, setTime } from "../../redux/playerSlice";
 import "./EpisodeList.scss";
 
 const EpisodeList = () => {
-  const [seasons, setSeasons] = useState();
   const native = useSelector(state => state.interface.native);
   const playlist = useSelector(state => state.content.playlist);
+  const seasons = useSelector(state => state.content.seasons);
   const availabilities = useSelector(state => state.content.availabilities);
   const language = useSelector(state => state.content.language);
   const season = useSelector(state => state.content.season);
@@ -37,7 +40,7 @@ const EpisodeList = () => {
         }
         seasons[season.language][season.index] = season;
       });
-      setSeasons(seasons);
+      dispatch(setSeasons(seasons));
 
       const defaultLanguage = playlist.seasons.filter(season => season.index === availableSeasons[0]).map(season => season.language).sort()[0];
       const defaultSeason = availableSeasons[0];
@@ -49,9 +52,11 @@ const EpisodeList = () => {
         language: defaultLanguage,
         season: defaultSeason
       }));
-      episodeList.current.scrollIntoView({
-        behavior: "smooth"
-      });
+      if (!isElementInViewport(episodeList.current)) {
+        episodeList.current.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
     }
   }, [episodeList, playlist, dispatch]);
 
@@ -183,15 +188,18 @@ const Episode = ({ episode, selected }) => {
       playlist: playlist.key,
       language: language,
       season: season,
-      key: episode.key
+      key: episode.key,
+      name: episode.name
     }));
-    dispatch(setSource(`${playlist.node}/content/source/${playlist.key}/${episode.key}`));
+    dispatch(setTime(0));
+    dispatch(play());
+    sync();
   }
 
   return (
     <li className={`Episode ${!episode.available ? "unavailable" : ""} ${selected ? "selected" : ""}`}>
       <button aria-label={`Play Episode ${episode.index}`} onClick={onSelect}>
-        <img src={play} alt="Play Icon" />
+        <img src={playIcon} alt="Play Icon" />
         {episode.name}
       </button>
       <span>{episode.index}</span>

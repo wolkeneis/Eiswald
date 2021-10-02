@@ -17,12 +17,14 @@ const PlaylistPreviews = ({ nodes }) => {
       if (Object.hasOwnProperty.call(nodes, host)) {
         const node = nodes[host];
         if (node.state !== "maintenance") {
-          fetchPlaylists(node)
-            .then(response => response.json())
-            .then(fetchedPreviews => {
-              fetchedPreviews.forEach(fetchedPreview => fetchedPreview.node = node.origin);
-              dispatch(addPlaylistPreviews(fetchedPreviews));
-            });
+          try {
+            fetchPlaylists(node)
+              .then(response => response.json())
+              .then(fetchedPreviews => {
+                fetchedPreviews.forEach(fetchedPreview => fetchedPreview.node = node.origin);
+                dispatch(addPlaylistPreviews(fetchedPreviews));
+              }).catch(() => { });
+          } catch { }
         }
       }
     }
@@ -73,7 +75,7 @@ PlaylistPreviews.propTypes = {
 const SearchBox = ({ onChange, onSearch }) => {
   return (
     <div className="SearchBox">
-      <input aria-label="Search Filter" placeholder="Search..." type="text" onChange={onChange} onClick={onSearch} />
+      <input aria-label="Search Filter" placeholder="Search..." type="search" onChange={onChange} onClick={onSearch} />
     </div>
   );
 }

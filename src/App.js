@@ -1,12 +1,13 @@
 import { Device } from "@capacitor/device";
 import { Storage } from "@capacitor/storage";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch, useParams } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import "./App.scss";
 import Loader from "./component/Loader";
 import QueryRedirect from "./component/QueryRedirect";
+import { joinRoom } from "./logic/connection";
 import { selectTheme, setNative } from "./redux/interfaceSlice";
 
 const Content = lazy(() => import("./component/content/Content"));
@@ -29,7 +30,7 @@ function App() {
       if (native) {
         const queryList = window.matchMedia("(orientation: portrait)");
         queryList.addEventListener("change", event => {
-          const video = document.querySelector("video");
+          const video = document.getElementById("video-wrapper");
           if (video) {
             if (event.matches) {
               if (document.fullscreenElement === video) {
@@ -38,7 +39,7 @@ function App() {
             }
             else {
               if (document.fullscreenElement !== video) {
-                video.requestFullscreen();
+                video.requestFullscreen().catch((error) => console.error(error)/* ASK FOR FULLSCREEN*/);
               }
             }
           }
@@ -63,9 +64,16 @@ function App() {
     <div className={`App ${theme} ${native ? "native" : ""}`}>
       <BrowserRouter>
         <Switch>
-          <QueryRedirect exact from="/redirect/profile" to="/settings/profile" />
-          <QueryRedirect exact from="/redirect/nodes" to="/settings/nodes" />
-          <QueryRedirect exact from="/redirect/authorize" to="/authorize" />
+          <Route path="/redirect">
+            <Switch>
+              <QueryRedirect exact from="/redirect/profile" to="/settings/profile" />
+              <QueryRedirect exact from="/redirect/nodes" to="/settings/nodes" />
+              <QueryRedirect exact from="/redirect/authorize" to="/authorize" />
+            </Switch>
+          </Route>
+          <Route from="/invite/:roomId">
+            <InviteHandler to="/" />
+          </Route>
           <Route path="/authorize"
             children={({ match }) => {
               return native !== undefined && (native
@@ -84,7 +92,7 @@ function App() {
             }}>
 
           </Route>
-          <Route path="/">
+          <Route path={"/"}>
             {native !== undefined && (native
               ? (<>
                 <Suspense fallback={<Loader />}>
@@ -107,5 +115,29 @@ function App() {
     </div>
   );
 }
+
+const InviteHandler = ({ children, ...props }) => {
+  const [requestSent, setRequestSent] = useState(false);
+  const { roomId } = useParams();
+
+  useEffect(() => {
+    if (roomId) {
+      joinRoom(roomId);
+      setRequestSent(true);
+    }
+  }, [roomId]);
+
+  return (
+    <>
+      {requestSent &&
+        <Redirect {...props} >
+          {children}
+        </Redirect>
+      }
+    </>
+  );
+}
+
+
 
 export default App;

@@ -7,11 +7,11 @@ export const contentSlice = createSlice({
     playlistPreviews: [],
     playlists: {},
     playlist: undefined,
+    seasons: undefined,
     availabilities: undefined,
     language: undefined,
     season: undefined,
-    episode: undefined,
-    source: undefined
+    episode: undefined
   },
   reducers: {
     setNodes: (state, action) => {
@@ -51,6 +51,10 @@ export const contentSlice = createSlice({
       state.playlist = undefined;
     },
 
+    setSeasons: (state, action) => {
+      state.seasons = action.payload;
+    },
+
     setDefaults: (state, action) => {
       state.availabilities = action.payload.availabilities;
       state.language = action.payload.language;
@@ -66,10 +70,6 @@ export const contentSlice = createSlice({
 
     setEpisode: (state, action) => {
       state.episode = action.payload;
-    },
-
-    setSource: (state, action) => {
-      state.source = action.payload;
     }
   }
 });
@@ -78,9 +78,9 @@ export const { setNodes, addNode, removeNode, setNodeState } = contentSlice.acti
 export const { setPlaylistPreviews, addPlaylistPreviews, clearPlaylistPreviews } = contentSlice.actions;
 export const { setPlaylist } = contentSlice.actions;
 export const { selectPlaylist, deselectPlaylist } = contentSlice.actions;
+export const { setSeasons } = contentSlice.actions;
 export const { setDefaults } = contentSlice.actions;
 export const { setLanguage, setSeason } = contentSlice.actions;
 export const { setEpisode } = contentSlice.actions;
-export const { setSource } = contentSlice.actions;
 
 export default contentSlice.reducer;

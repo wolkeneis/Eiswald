@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/wolkeneis/Eiswald/issues"
   },
-  "homepage": "https://eiswald.onrender.com/",
+  "homepage": "https://eiswald.wolkeneis.dev/",
   "scripts": {
     "build": "tsc && electron-rebuild",
     "electron:start-live": "node ./live-runner.js",

@@ -1,6 +1,6 @@
-import england from "../media/languages/england.svg";
-import germany from "../media/languages/germany.svg";
-import japan from "../media/languages/japan.svg";
+import englandIcon from "../media/languages/england.svg";
+import germanyIcon from "../media/languages/germany.svg";
+import japanIcon from "../media/languages/japan.svg";
 import { wrapPromise } from "./utils";
 
 
@@ -54,7 +54,7 @@ function languageImage(language) {
 }
 
 function languageIndexImage(language) {
-  return `${language}` === "0" ? germany : `${language}` === "1" ? japan : `${language}` === "2" ? england : undefined;
+  return `${language}` === "0" ? germanyIcon : `${language}` === "1" ? japanIcon : `${language}` === "2" ? englandIcon : undefined;
 }
 
 function languageAlt(language) {

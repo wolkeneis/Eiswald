@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import moon from "../../../media/moon.svg";
-import nodes from "../../../media/nodes.svg";
-import profile from "../../../media/profile.svg";
-import sun from "../../../media/sun.svg";
+import moonIcon from "../../../media/moon.svg";
+import nodesIcon from "../../../media/nodes.svg";
+import profileIcon from "../../../media/profile.svg";
+import sunIcon from "../../../media/sun.svg";
 import { toggleTheme } from "../../../redux/interfaceSlice";
 import "./Settings.scss";
 
@@ -15,16 +15,16 @@ const Settings = () => {
   return (
     <>
       <h1>Settings</h1>
-      <SettingsLinkItem linkName="Account Settings" imageAlt="Account Icon" imageSource={profile} destination="/settings/profile">
+      <SettingsLinkItem linkName="Account Settings" imageAlt="Account Icon" imageSource={profileIcon} destination="/settings/profile">
         <span>Profile</span>
       </SettingsLinkItem>
-      <SettingsLinkItem linkName="Node Settings" imageAlt="Node Connections" imageSource={nodes} destination="/settings/nodes">
+      <SettingsLinkItem linkName="Node Settings" imageAlt="Node Connections" imageSource={nodesIcon} destination="/settings/nodes">
         <span>Nodes</span>
       </SettingsLinkItem>
       <SettingsButtonItem
         buttonName="Theme Toggler"
         imageAlt={theme === "dark-theme" ? "Sun Icon" : "Moon Icon"}
-        imageSource={theme === "dark-theme" ? sun : moon}
+        imageSource={theme === "dark-theme" ? sunIcon : moonIcon}
         onClick={() => dispatch(toggleTheme())}>
         <span>{theme === "dark-theme" ? "Light Mode" : "Dark Mode"}</span>
       </SettingsButtonItem>

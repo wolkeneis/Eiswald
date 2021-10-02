@@ -1,8 +1,10 @@
 import { lazy, Suspense, useRef } from "react";
 import { Route, useHistory } from "react-router";
 import { CSSTransition } from "react-transition-group";
-import back from "../../media/back.svg";
-import settings from "../../media/settings.svg";
+import { createRoom } from "../../logic/connection";
+import backIcon from "../../media/back.svg";
+import createIconIcon from "../../media/create-room.svg";
+import settingsIcon from "../../media/settings.svg";
 import IconButton from "../IconButton";
 import Loader from "../Loader";
 import Settings, { BackButton } from "../settings/pages/Settings";
@@ -20,7 +22,8 @@ const Navigator = () => {
 
   return (
     <nav className="Navigator">
-      <IconButton buttonName="Settings" imageAlt="Settings Icon" imageSource={settings} onClick={() => history.push("/settings")} />
+      <IconButton buttonName="Create Room" imageAlt="Create Room Icon" imageSource={createIconIcon} onClick={() => createRoom()} />
+      <IconButton buttonName="Settings" imageAlt="Settings Icon" imageSource={settingsIcon} onClick={() => history.push("/settings")} />
       <Route path={"/settings"}>
         <SettingsPage>
           <Route path="/settings/profile" exact>
@@ -33,7 +36,7 @@ const Navigator = () => {
                 classNames="secondary-menu">
                 <div ref={profileRef} className="secondary-menu">
                   <Suspense fallback={<Loader />}>
-                    <BackButton linkName="Back to Settings" imageAlt="Back" imageSource={back} destination="/settings">
+                    <BackButton linkName="Back to Settings" imageAlt="Back" imageSource={backIcon} destination="/settings">
                       <span>Back</span>
                     </BackButton>
                     <ProfileSettings />
@@ -52,7 +55,7 @@ const Navigator = () => {
                 classNames="secondary-menu">
                 <div ref={nodesRef} className="secondary-menu">
                   <Suspense fallback={<Loader />}>
-                    <BackButton linkName="Back to Settings" imageAlt="Back" imageSource={back} destination="/settings">
+                    <BackButton linkName="Back to Settings" imageAlt="Back" imageSource={backIcon} destination="/settings">
                       <span>Back</span>
                     </BackButton>
                     <NodeSettings />

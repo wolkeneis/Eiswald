@@ -1,5 +1,5 @@
-import discord from "../media/discord.svg";
-import github from "../media/github.png";
+import discordIcon from "../media/discord.svg";
+import githubIcon from "../media/github.png";
 import { wrapPromise } from "./utils";
 
 
@@ -7,12 +7,12 @@ const providers = [
   {
     id: "discord",
     name: "Discord",
-    icon: discord
+    icon: discordIcon
   },
   {
     id: "github",
     name: "Github",
-    icon: github
+    icon: githubIcon
   },
 ];
 
