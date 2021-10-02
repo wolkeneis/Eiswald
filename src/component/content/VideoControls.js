@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sync } from "../../logic/connection";
-import { clamp } from "../../logic/utils";
+import { clamp, isTouchDevice } from "../../logic/utils";
 import exitFullscreenIcon from "../../media/exit-fullscreen.svg";
 import fullscreenIcon from "../../media/fullscreen.svg";
 import nextIcon from "../../media/next.svg";
@@ -152,7 +152,7 @@ const VolumeChanger = () => {
 
   return (
     <>
-      {!native &&
+      {!native && !isTouchDevice() &&
         <div className="VolumeChanger">
           <img src={volumeIcon} alt="Volume" />
           <div {...bind()} ref={slider} className="VolumeSlider">

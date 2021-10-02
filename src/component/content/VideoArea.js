@@ -9,6 +9,7 @@ import EpisodeList from "./EpisodeList";
 import RoomControls from "./RoomControls";
 import "./VideoArea.scss";
 import VideoControls from "./VideoControls";
+import { isTouchDevice } from "../../logic/utils";
 
 const VideoArea = () => {
   const [controlsVisible, setControlsVisible] = useState(false);
@@ -42,7 +43,7 @@ const VideoArea = () => {
         idle.current = idle.current + 500;
       }
     }
-    if (idle.current >= (native ? 3500 : 2500)) {
+    if (idle.current >= (native || isTouchDevice() ? 3500 : 2500)) {
       setControlsVisible(false);
       idle.current = 0;
     }
