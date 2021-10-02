@@ -27,6 +27,9 @@ function App() {
     Device.getInfo().then(info => {
       const native = info.operatingSystem === "ios" || info.operatingSystem === "android";
       dispatch(setNative(native));
+      if (!Element.prototype.requestFullscreen) {
+        Element.prototype.requestFullscreen = Element.prototype.mozRequestFullscreen || Element.prototype.mozRequestFullScreen || Element.prototype.webkitRequestFullscreen || Element.prototype.msRequestFullscreen;
+      }
       if (native) {
         const queryList = window.matchMedia("(orientation: portrait)");
         queryList.addEventListener("change", event => {

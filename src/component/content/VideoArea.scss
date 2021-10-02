@@ -10,9 +10,6 @@
     flex-direction: column;
     align-items: center;
   }
-  &.native .VideoPlayer {
-    max-width: 480px;
-  }
   .VideoPlayer {
     background: var(--color-element);
     border-radius: .75rem;
@@ -24,290 +21,27 @@
     flex-direction: column;
     &.native {
       background: none;
-    }
-    .RoomControls {
-      background: var(--color-element);
-      margin-top: 1rem;
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: space-between;
-      &.native {
-        border-radius: 1rem;
-        align-items: center;
-        flex-direction: column;
-        .Buttons {
-          margin: 1rem;
-        }
-        .Users {
-          margin: 1rem;
-        }
-      }
-      .Buttons {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: center;
-        .HorizontalBox {
-          display: flex;
-          flex-direction: row;
-          align-items: stretch;
-          justify-content: space-between;
-          input {
-            @extend .text-input-clean;
-            background: var(--color-higher-element);
-            border-radius: .5rem;
-            margin: .28rem;
-            padding: {
-              left: .4rem;
-              right: .4rem;
-            }
-          }
-          .AddButton {
-            background: var(--color-higher-element);
-            border-radius: .5rem;
-            margin: .28rem;
-            padding: .48rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            .IconButton {
-              width: 1.35rem;
-              height: 1.35rem;
-              img {
-                width: 1.35rem;
-                height: 1.35rem;
-              }
-            }
-          }
-          .InviteButton {
-            background: var(--color-higher-element);
-            border-radius: .5rem;
-            margin: .28rem;
-            padding: .28rem;
-            display: flex;
-            align-items: center;
-            .IconButton {
-              width: 1.65rem;
-              height: 1.65rem;
-              img {
-                width: 1.65rem;
-                height: 1.65rem;
-              }
-            }
-            span {
-              color: var(--color-font);
-              margin: .35rem;
-              cursor: pointer;
-            }
-          }
-          .LeaveButton {
-            background: var(--color-higher-element);
-            border-radius: .5rem;
-            margin: .28rem;
-            padding: .28rem;
-            display: flex;
-            align-items: center;
-            .IconButton {
-              width: 1.65rem;
-              height: 1.65rem;
-              img {
-                width: 1.65rem;
-                height: 1.65rem;
-              }
-            }
-            span {
-              color: var(--color-font);
-              margin: .35rem;
-              cursor: pointer;
-            }
-          }
-        }
-      }
-      .Users {
-        background: var(--color-higher-element);
-        border-radius: .5rem;
-        margin: .25rem;
-        padding: .25rem;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        .User {
-          border-left: var(--color-higher-element) 2px solid;
-          margin: .25rem;
-          padding: .25rem;
-          &.host {
-            border-left: var(--color-accent) 2px solid;
-          }
-          span {
-            color: var(--color-font);
-          }
-        }
-      }
+      max-width: 480px;
     }
     .VideoWrapper {
       position: relative;
       display: flex;
       align-items: center;
-      .ClickControl {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-      }
-      .VideoControls {
-        background: linear-gradient(to top, black , transparent);
-        width: calc(100% - 3rem);
-        bottom: 0;
-        padding: {
-          top: 0;
-          bottom: 1.5rem;
-          left: 1.5rem;
-          right: 1.5rem;
-        }
-        position: absolute;
-        opacity: 1;
-        display: flex;
-        flex-direction: column;
-        transition: opacity 300ms ease;
-        cursor: default;
-        .AboveTimeline {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          .UnmuteButton {
-            @extend .button-clean;
-            background: var(--color-element);
-            color: var(--color-accent);
-            border-radius: .35rem;
-            margin: .2rem;
-            padding: .5rem;
-          }
-          .ControlContainer {
-            padding: .15rem;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            .IconButton {
-              margin: .35rem;
-              width: 1.15rem;
-              height: 1.15rem;
-              img {
-                width: 1.15rem;
-                height: 1.15rem;
-              }
-            }
-            .Time {
-              color: var(--color-font);
-              margin: {
-                top: 0;
-                bottom: 0;
-                left: .5rem;
-                right: 0;
-              }
-              font-size: .9rem;
-              user-select: none;
-            }
-          }
-        }
-        .VolumeChanger {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          img {
-            width: 1.15rem;
-            height: 1.15rem;
-          }
-          &:hover {
-            .VolumeSlider {
-              width: 3rem;
-              .Thumb {
-                opacity: 1;
-              }
-            }
-          }
-          .VolumeSlider {
-            position: relative;
-            background: var(--color-element);
-            height: 4px;
-            width: 0;
-            margin: .45rem;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            touch-action: none;
-            transition: width 200ms ease;
-            .Volume {
-              background: linear-gradient(to right, var(--color-accent) 100%, transparent);
-              background-size: 0 100%;
-              background-repeat: no-repeat;
-              background-position: 0 0;
-              width: 100%;
-              height: 100%;
-              position: absolute;
-            }
-            .Thumb {
-              background: var(--color-accent);
-              border-radius: 50%;
-              width: .75rem;
-              height: .75rem;
-              left: 0%;
-              margin-left: -.325rem;
-              position: absolute;
-              opacity: 0;
-              transition: opacity 200ms ease;
-            }
-          }
-        }
-        .Timeline {
-          position: relative;
-          background: var(--color-element);
-          height: 4px;
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-          touch-action: none;
-          .Buffered {
-            background: linear-gradient(to right, var(--color-element-hover) 100%, transparent);
-            background-size: 0 100%;
-            background-repeat: no-repeat;
-            background-position: 0 0;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-          }
-          .Played {
-            background: linear-gradient(to right, var(--color-accent) 100%, transparent);
-            background-size: 0 100%;
-            background-repeat: no-repeat;
-            background-position: 0 0;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-          }
-          .Thumb {
-            background: var(--color-accent);
-            border-radius: 50%;
-            width: .75rem;
-            height: .75rem;
-            left: 0%;
-            margin-left: -.325rem;
-            position: absolute;
-            opacity: 0;
-            transition: opacity 200ms ease;
-          }
-          &:hover {
-            .Buffered {
-              transform: scaleY(1.35);
-            }
-            .Played {
-              transform: scaleY(1.35);
-            }
-            & .Thumb {
-              opacity: 1;
-            }
-          }
-        }
-      }
+      transform: translateZ(.35px);
+      -webkit-transform: translateZ(.35px);
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+    }
+  }
+}
+
+@media only screen and (max-width: 880px) {
+  .VideoArea {
+    flex-direction: column;
+    align-items: center;
+    .VideoPlayer {
+      background: none;
+      max-width: 480px;
     }
   }
 }

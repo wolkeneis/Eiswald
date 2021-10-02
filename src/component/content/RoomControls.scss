@@ -1,0 +1,136 @@
+@import '../../general';
+
+.RoomControls {
+  background: var(--color-element);
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  &.native {
+    border-radius: 1rem;
+    align-items: center;
+    flex-direction: column;
+    .Buttons {
+      margin: 1rem;
+    }
+    .Users {
+      margin: 1rem;
+    }
+  }
+  .Buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    .HorizontalBox {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: space-between;
+      input {
+        @extend .text-input-clean;
+        background: var(--color-higher-element);
+        border-radius: .5rem;
+        margin: .28rem;
+        padding: {
+          left: .4rem;
+          right: .4rem;
+        }
+      }
+      .AddButton {
+        background: var(--color-higher-element);
+        border-radius: .5rem;
+        margin: .28rem;
+        padding: .48rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .IconButton {
+          width: 1.35rem;
+          height: 1.35rem;
+          img {
+            width: 1.35rem;
+            height: 1.35rem;
+          }
+        }
+      }
+      .InviteButton {
+        background: var(--color-higher-element);
+        border-radius: .5rem;
+        margin: .28rem;
+        padding: .28rem;
+        display: flex;
+        align-items: center;
+        .IconButton {
+          width: 1.65rem;
+          height: 1.65rem;
+          img {
+            width: 1.65rem;
+            height: 1.65rem;
+          }
+        }
+        span {
+          color: var(--color-font);
+          margin: .35rem;
+          cursor: pointer;
+        }
+      }
+      .LeaveButton {
+        background: var(--color-higher-element);
+        border-radius: .5rem;
+        margin: .28rem;
+        padding: .28rem;
+        display: flex;
+        align-items: center;
+        .IconButton {
+          width: 1.65rem;
+          height: 1.65rem;
+          img {
+            width: 1.65rem;
+            height: 1.65rem;
+          }
+        }
+        span {
+          color: var(--color-font);
+          margin: .35rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .Users {
+    background: var(--color-higher-element);
+    border-radius: .5rem;
+    margin: .25rem;
+    padding: .25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    .User {
+      border-left: var(--color-higher-element) 2px solid;
+      margin: .25rem;
+      padding: .25rem;
+      &.host {
+        border-left: var(--color-accent) 2px solid;
+      }
+      span {
+        color: var(--color-font);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 880px) {
+  .RoomControls {
+    border-radius: 1rem;
+    align-items: center;
+    flex-direction: column;
+    .Buttons {
+      margin: 1rem;
+    }
+    .Users {
+      margin: 1rem;
+    }
+  }
+}

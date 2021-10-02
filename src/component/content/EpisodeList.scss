@@ -116,6 +116,7 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      z-index: 1;
       .selector-item {
         @extend .button-clean;
         border-radius: .5rem;
