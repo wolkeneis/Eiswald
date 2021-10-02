@@ -34,7 +34,13 @@ const isElementInViewport = (element) => {
   );
 }
 
+function isTouchDevice() {
+  return (('ontouchstart' in window) ||
+    (navigator.maxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0));
+}
+
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
-export { wrapPromise, isElementInViewport, clamp };
+export { wrapPromise, isElementInViewport, isTouchDevice, clamp };
 
