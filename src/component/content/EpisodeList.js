@@ -6,7 +6,7 @@ import { languageAlt, languageImage, seasonName } from "../../logic/node";
 import { isElementInViewport } from "../../logic/utils";
 import playIcon from "../../media/play.svg";
 import { setDefaults, setEpisode, setLanguage, setSeason, setSeasons } from "../../redux/contentSlice";
-import { play, setSource, setTime } from "../../redux/playerSlice";
+import { play, setTime } from "../../redux/playerSlice";
 import "./EpisodeList.scss";
 
 const EpisodeList = () => {
@@ -198,9 +198,6 @@ const Episode = ({ episode, selected }) => {
       dispatch(setTime(0));
       dispatch(play());
       sync();
-      if (!roomId) {
-        dispatch(setSource(undefined));
-      }
     }
   }
 

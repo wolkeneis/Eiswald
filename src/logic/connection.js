@@ -55,7 +55,7 @@ socket.on("sync", (data) => {
     const episodeInformation = source.split("@")[1].split("/");
     const episode = {
       language: seasonInformation[0],
-      season: seasonInformation[1],
+      season: parseInt(seasonInformation[1]),
       playlist: episodeInformation[0],
       key: episodeInformation[1],
       name: episodeInformation[2]
@@ -69,7 +69,6 @@ socket.on("sync", (data) => {
       episode.language !== currentEpisode.language ||
       episode.season !== currentEpisode.season) {
       store.dispatch(setEpisode(episode));
-      store.dispatch(setSource(undefined));
     }
   } else {
     store.dispatch(setEpisode(undefined));
