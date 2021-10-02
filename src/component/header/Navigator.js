@@ -3,7 +3,7 @@ import { Route, useHistory } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import { createRoom } from "../../logic/connection";
 import backIcon from "../../media/back.svg";
-import createIconIcon from "../../media/create-room.svg";
+import createIcon from "../../media/create-room.svg";
 import settingsIcon from "../../media/settings.svg";
 import IconButton from "../IconButton";
 import Loader from "../Loader";
@@ -22,7 +22,7 @@ const Navigator = () => {
 
   return (
     <nav className="Navigator">
-      <IconButton buttonName="Create Room" imageAlt="Create Room Icon" imageSource={createIconIcon} onClick={() => createRoom()} />
+      <IconButton buttonName="Create Room" imageAlt="Create Room Icon" imageSource={createIcon} onClick={() => createRoom()} />
       <IconButton buttonName="Settings" imageAlt="Settings Icon" imageSource={settingsIcon} onClick={() => history.push("/settings")} />
       <Route path={"/settings"}>
         <SettingsPage>
