@@ -392,7 +392,7 @@ const VolumeChanger = () => {
 
   return (
     <>
-      {native &&
+      {!native &&
         <div className="VolumeChanger">
           <img src={volumeIcon} alt="Volume" />
           <div {...bind()} ref={slider} className="VolumeSlider">
