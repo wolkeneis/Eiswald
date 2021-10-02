@@ -158,8 +158,6 @@
         background: linear-gradient(to top, black , transparent);
         width: calc(100% - 3rem);
         bottom: 0;
-        display: flex;
-        flex-direction: column;
         padding: {
           top: 0;
           bottom: 1.5rem;
@@ -231,7 +229,7 @@
             position: relative;
             background: var(--color-element);
             height: 4px;
-            width: 0px;
+            width: 0;
             margin: .45rem;
             display: flex;
             align-items: center;

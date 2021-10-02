@@ -6,7 +6,7 @@ import { languageAlt, languageImage, seasonName } from "../../logic/node";
 import { isElementInViewport } from "../../logic/utils";
 import playIcon from "../../media/play.svg";
 import { setDefaults, setEpisode, setLanguage, setSeason, setSeasons } from "../../redux/contentSlice";
-import { play, setTime } from "../../redux/playerSlice";
+import { play, setSource, setTime } from "../../redux/playerSlice";
 import "./EpisodeList.scss";
 
 const EpisodeList = () => {
@@ -181,19 +181,27 @@ const Episode = ({ episode, selected }) => {
   const playlist = useSelector(state => state.content.playlist);
   const language = useSelector(state => state.content.language);
   const season = useSelector(state => state.content.season);
+  const roomId = useSelector(state => state.room.roomId);
+  const mode = useSelector(state => state.room.mode);
+  const host = useSelector(state => state.room.host);
   const dispatch = useDispatch();
 
   const onSelect = () => {
-    dispatch(setEpisode({
-      playlist: playlist.key,
-      language: language,
-      season: season,
-      key: episode.key,
-      name: episode.name
-    }));
-    dispatch(setTime(0));
-    dispatch(play());
-    sync();
+    if (!roomId || (host || mode !== "strict")) {
+      dispatch(setEpisode({
+        playlist: playlist.key,
+        language: language,
+        season: season,
+        key: episode.key,
+        name: episode.name
+      }));
+      dispatch(setTime(0));
+      dispatch(play());
+      sync();
+      if (!roomId) {
+        dispatch(setSource(undefined));
+      }
+    }
   }
 
   return (

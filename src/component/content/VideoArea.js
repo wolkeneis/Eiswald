@@ -130,7 +130,7 @@ const VideoArea = () => {
     }
   }
 
-  const onError = (error, error2) => {
+  const onError = () => {
     if (muted) {
       dispatch(setTime(0));
       dispatch(setDuration(0));
@@ -258,15 +258,14 @@ const RoomControls = () => {
 
 
 const VideoControls = ({ visible, muted, unmute }) => {
-  const native = useSelector(state => state.interface.native);
-
+  const roomId = useSelector(state => state.room.roomId);
+  const mode = useSelector(state => state.room.mode);
+  const host = useSelector(state => state.room.host);
   const duration = useSelector(state => state.player.duration);
   const time = useSelector(state => state.player.time);
   const playing = useSelector(state => state.player.playing);
-
   const playlists = useSelector(state => state.content.playlists);
   const selectedEpisode = useSelector(state => state.content.episode);
-
   const dispatch = useDispatch();
 
   const playlist = selectedEpisode && playlists[selectedEpisode.playlist];
@@ -284,19 +283,21 @@ const VideoControls = ({ visible, muted, unmute }) => {
   }
 
   const previousEpisode = selectedEpisode && playlist && findEpisode(-1);
-
   const nextEpisode = selectedEpisode && playlist && findEpisode(1);
+
+  const parseTime = (time) => {
+    return `${Math.floor(time / 60)}: ${time % 60 < 10 ? "0" : ""} ${Math.floor(time % 60)}`
+  }
 
   return (
     <div className="VideoControls" style={visible || muted ? {} : { opacity: "0" }}>
       {muted &&
         <div className="AboveTimeline">
           <button aria-label="Unmute Button" className="UnmuteButton" onClick={unmute} style={{ opacity: "1" }}>Unmute Audio</button>
-        </div>
-      }
+        </div>}
       <div className="AboveTimeline">
         <div className="ControlContainer">
-          {previousEpisode &&
+          {(!roomId || (host || mode !== "strict")) && previousEpisode &&
             <IconButton buttonName="Previous" imageAlt="Previous Icon" imageSource={previousIcon} onClick={() => {
               dispatch(setEpisode({
                 playlist: playlist.key,
@@ -306,6 +307,9 @@ const VideoControls = ({ visible, muted, unmute }) => {
                 name: previousEpisode.name
               }));
               sync();
+              if (!roomId) {
+                dispatch(setSource(undefined));
+              }
             }} ></IconButton>
           }
           {playing
@@ -318,7 +322,7 @@ const VideoControls = ({ visible, muted, unmute }) => {
               sync();
             }} ></IconButton>
           }
-          {nextEpisode &&
+          {(!roomId || (host || mode !== "strict")) && nextEpisode &&
             <IconButton buttonName="Next" imageAlt="Next Icon" imageSource={nextIcon} onClick={() => {
               dispatch(setEpisode({
                 playlist: playlist.key,
@@ -328,18 +332,16 @@ const VideoControls = ({ visible, muted, unmute }) => {
                 name: nextEpisode.name
               }));
               sync();
+              if (!roomId) {
+                dispatch(setSource(undefined));
+              }
             }} ></IconButton>
           }
-          <p className="Time">{Math.floor(time / 60)}:{time % 60 < 10 ? "0" : ""}{Math.floor(time % 60)} / {Math.floor(duration / 60)}:{duration % 60 < 10 ? "0" : ""}{Math.floor(duration % 60)}</p>
+          <p className="Time">{parseTime(time)} / {parseTime(duration)}</p>
         </div>
         <div className="ControlContainer">
-          {!native &&
-            <VolumeChanger />
-          }
-          {document.fullscreenElement === document.getElementById("video-wrapper")
-            ? <IconButton buttonName="Exit Fullscreen" imageAlt="Exit Fullscreen Icon" imageSource={exitFullscreenIcon} onClick={() => document.exitFullscreen()} ></IconButton>
-            : <IconButton buttonName="Fullscreen" imageAlt="Fullscreen Icon" imageSource={fullscreenIcon} onClick={() => document.getElementById("video-wrapper").requestFullscreen()} ></IconButton>
-          }
+          <VolumeChanger />
+          <FullscreenButton />
         </div>
       </div>
       <Timeline />
@@ -359,6 +361,7 @@ VideoControls.propTypes = {
 }
 
 const VolumeChanger = () => {
+  const native = useSelector(state => state.interface.native);
   const volume = useSelector(state => state.player.volume);
   const dispatch = useDispatch();
   const slider = useRef();
@@ -373,15 +376,28 @@ const VolumeChanger = () => {
 
   return (
     <>
-      <div className="VolumeChanger">
-        <img src={volumeIcon} alt="Volume" />
-        <div {...bind()} ref={slider} className="VolumeSlider">
-          <div className="Volume" style={{ backgroundSize: `${volume * 100}% 100%` }}></div>
-          <div className="Thumb" style={{ left: `${volume * 100}%` }}></div>
+      {native &&
+        <div className="VolumeChanger">
+          <img src={volumeIcon} alt="Volume" />
+          <div {...bind()} ref={slider} className="VolumeSlider">
+            <div className="Volume" style={{ backgroundSize: `${volume * 100}% 100%` }}></div>
+            <div className="Thumb" style={{ left: `${volume * 100}%` }}></div>
+          </div>
         </div>
-      </div>
+      }
     </>
   );
+}
+
+const FullscreenButton = () => {
+  return (
+    <>
+      {document.fullscreenElement === document.getElementById("video-wrapper")
+        ? <IconButton buttonName="Exit Fullscreen" imageAlt="Exit Fullscreen Icon" imageSource={exitFullscreenIcon} onClick={() => document.exitFullscreen()} ></IconButton>
+        : <IconButton buttonName="Fullscreen" imageAlt="Fullscreen Icon" imageSource={fullscreenIcon} onClick={() => document.getElementById("video-wrapper").requestFullscreen()} ></IconButton>
+      }
+    </>
+  )
 }
 
 
