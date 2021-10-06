@@ -30,7 +30,7 @@ const ProfileSettings = () => {
         : <></>
       }
       <Suspense fallback={<Loader />}>
-        <ProfileConnections loggedIn={profile ? true : false} />
+        <ProfileConnections loggedIn={(profile && profile.read()) ? true : false} />
       </Suspense>
     </>
   );

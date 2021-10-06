@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { Route } from "react-router";
-import { Link } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+import backIcon from "../../media/back.svg";
+import { BackButton } from "../settings/pages/Settings";
 import Branding from "./Branding";
 import "./NativeHeader.scss";
 
@@ -20,9 +21,25 @@ const NativeHeader = () => {
             timeout={500}
             classNames="secondary-header">
             <div ref={back} className="secondary-header">
-              <Link className="link" to="/settings">
-                &#8592; Back
-              </Link>
+              <BackButton linkName="Back to Settings" imageAlt="Back" imageSource={backIcon} destination="/settings">
+                <span>Back</span>
+              </BackButton>
+            </div>
+          </CSSTransition>
+        )}
+      </Route>
+      <Route path={"/watch"} exact>
+        {({ match }) => (
+          <CSSTransition
+            nodeRef={back}
+            in={match !== null}
+            unmountOnExit
+            timeout={500}
+            classNames="secondary-header">
+            <div ref={back} className="secondary-header">
+              <BackButton linkName="Back to Settings" imageAlt="Back" imageSource={backIcon} destination="/">
+                <span>Back</span>
+              </BackButton>
             </div>
           </CSSTransition>
         )}

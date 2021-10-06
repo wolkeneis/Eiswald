@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAvatar, nodeStateClass, nodeStateText } from "../../../logic/node";
+import { fetchAvatar, fetchNodeProfile, fetchNodeState, nodeStateClass, nodeStateText } from "../../../logic/node";
 import { addNode, removeNode, setNodeState } from "../../../redux/contentSlice";
 import "./NodeSettings.scss";
 
@@ -18,14 +18,9 @@ const NodeSettings = () => {
       if (Object.hasOwnProperty.call(nodes, origin)) {
         const node = nodes[origin];
         try {
-          fetch(new Request(node.origin))
-            .then(response => response.json())
+          fetchNodeState(node.origin)
             .then(nodeInfo => {
-              fetch(new Request(`${node.origin}/profile`, {
-                credentials: "include",
-                redirect: "manual"
-              }))
-                .then(response => response.json())
+              fetchNodeProfile(node.origin)
                 .then(profile => {
                   const patchedNode = {
                     origin: node.origin,
@@ -65,34 +60,31 @@ const NodeSettings = () => {
   }, [nodes, dispatch]);
 
   useEffect(() => {
-    try {
-      fetch(new Request(origin))
-        .then(response => response.json())
-        .then(nodeInfo => {
-          fetch(new Request(`${origin}/profile`, {
-            credentials: "include",
-            redirect: "manual"
-          }))
-            .then(response => response.json())
-            .then(profile => {
-              const patchedNode = {
-                origin: origin,
-                state: nodeInfo.state,
-                name: nodeInfo.name,
-                profile: profile
-              }
-              setNode(patchedNode);
-            }).catch(() => {
-              setNode({
-                origin: origin,
-                state: nodeInfo.state,
-                name: nodeInfo.name,
-                profile: null
+    if (origin) {
+      try {
+        fetchNodeState(origin)
+          .then(nodeInfo => {
+            fetchNodeProfile(origin)
+              .then(profile => {
+                const patchedNode = {
+                  origin: origin,
+                  state: nodeInfo.state,
+                  name: nodeInfo.name,
+                  profile: profile
+                }
+                setNode(patchedNode);
+              }).catch(() => {
+                setNode({
+                  origin: origin,
+                  state: nodeInfo.state,
+                  name: nodeInfo.name,
+                  profile: null
+                });
               });
-            });
-        }
-        ).catch(() => { });
-    } catch { }
+          }
+          ).catch(() => { });
+      } catch { }
+    }
     return () => {
       setNode();
     }

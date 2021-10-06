@@ -78,21 +78,36 @@ const LeftControlContainer = ({ previousEpisode, nextEpisode }) => {
     return `${Math.floor(time / 60)}:${time % 60 < 10 ? "0" : ""}${Math.floor(time % 60)}`
   }
 
+  const playPrevious = () => {
+    dispatch(setEpisode({
+      playlist: selectedEpisode.playlist,
+      language: selectedEpisode.language,
+      season: selectedEpisode.season,
+      key: previousEpisode.key,
+      name: previousEpisode.name
+    }));
+    dispatch(setTime(0));
+    dispatch(play());
+    sync();
+  }
+
+  const playNext = () => {
+    dispatch(setEpisode({
+      playlist: selectedEpisode.playlist,
+      language: selectedEpisode.language,
+      season: selectedEpisode.season,
+      key: nextEpisode.key,
+      name: nextEpisode.name
+    }));
+    dispatch(setTime(0));
+    dispatch(play());
+    sync();
+  }
+
   return (
     <div className="ControlContainer">
       {(!roomId || (host || mode !== "strict")) && previousEpisode &&
-        <IconButton buttonName="Previous" imageAlt="Previous Icon" imageSource={previousIcon} onClick={() => {
-          dispatch(setEpisode({
-            playlist: selectedEpisode.playlist,
-            language: selectedEpisode.language,
-            season: selectedEpisode.season,
-            key: previousEpisode.key,
-            name: previousEpisode.name
-          }));
-          dispatch(setTime(0));
-          dispatch(play());
-          sync();
-        }} ></IconButton>
+        <IconButton buttonName="Previous" imageAlt="Previous Icon" imageSource={previousIcon} onClick={playPrevious} ></IconButton>
       }
       {playing
         ? <IconButton buttonName="Pause" imageAlt="Pause Icon" imageSource={pauseIcon} onClick={() => {
@@ -105,18 +120,7 @@ const LeftControlContainer = ({ previousEpisode, nextEpisode }) => {
         }} ></IconButton>
       }
       {(!roomId || (host || mode !== "strict")) && nextEpisode &&
-        <IconButton buttonName="Next" imageAlt="Next Icon" imageSource={nextIcon} onClick={() => {
-          dispatch(setEpisode({
-            playlist: selectedEpisode.playlist,
-            language: selectedEpisode.language,
-            season: selectedEpisode.season,
-            key: nextEpisode.key,
-            name: nextEpisode.name
-          }));
-          dispatch(setTime(0));
-          dispatch(play());
-          sync();
-        }} ></IconButton>
+        <IconButton buttonName="Next" imageAlt="Next Icon" imageSource={nextIcon} onClick={playNext} ></IconButton>
       }
       <p className="Time">{parseTime(time)} / {parseTime(duration)}</p>
     </div>

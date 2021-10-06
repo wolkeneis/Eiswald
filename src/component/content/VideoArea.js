@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import { useDispatch, useSelector } from "react-redux";
 import { requestSync, sync } from "../../logic/connection";
-import { isElementInViewport } from "../../logic/utils";
+import { isElementInViewport, isTouchDevice } from "../../logic/utils";
 import { pause, play, setDuration, setLoaded, setPlayed, setSource, setTime } from "../../redux/playerSlice";
 import useInterval from "../useInterval";
 import EpisodeList from "./EpisodeList";
 import RoomControls from "./RoomControls";
 import "./VideoArea.scss";
 import VideoControls from "./VideoControls";
-import { isTouchDevice } from "../../logic/utils";
 
 const VideoArea = () => {
   const [controlsVisible, setControlsVisible] = useState(false);
@@ -17,6 +16,7 @@ const VideoArea = () => {
   const native = useSelector(state => state.interface.native);
   const nodes = useSelector(state => state.content.nodes);
   const playlistPreviews = useSelector(state => state.content.playlistPreviews);
+  const playlist = useSelector(state => state.content.playlist);
   const selectedEpisode = useSelector(state => state.content.episode);
   const source = useSelector(state => state.player.source);
   const volume = useSelector(state => state.player.volume);
@@ -57,11 +57,17 @@ const VideoArea = () => {
   }, []);
 
   useEffect(() => {
-    if (playlistPreviews && selectedEpisode) {
-      const playlist = playlistPreviews.find(playlist => playlist.key === selectedEpisode.playlist);
-      dispatch(setSource(playlist ? `${playlist.node}/content/source/${playlist.key}/${selectedEpisode.key}` : undefined));
+    if ((playlist || playlistPreviews) && selectedEpisode) {
+      if (playlist && playlist.key === selectedEpisode.playlist) {
+        dispatch(setSource(`${playlist.node}/content/source/${playlist.key}/${selectedEpisode.key}`));
+      } else {
+        const foundPlaylist = playlistPreviews.find(playlist => playlist.key === selectedEpisode.playlist);
+        if (foundPlaylist !== undefined) {
+          dispatch(setSource(`${foundPlaylist.node}/content/source/${foundPlaylist.key}/${selectedEpisode.key}`));
+        }
+      }
     }
-  }, [playlistPreviews, selectedEpisode, dispatch]);
+  }, [playlistPreviews, playlist, selectedEpisode, dispatch]);
 
   useEffect(() => {
     if (source && videoContainer && !isElementInViewport(videoContainer.current)) {
@@ -74,7 +80,7 @@ const VideoArea = () => {
   useEffect(() => {
     if (videoPlayer.current) {
       const currentTime = videoPlayer.current.getCurrentTime();
-      if (currentTime > time + 0.2 || currentTime < time - 0.2) {
+      if (currentTime > time + 0.25 || currentTime < time - 0.25) {
         videoPlayer.current.seekTo(time, "seconds");
         idle.current = 0;
       }
@@ -108,6 +114,21 @@ const VideoArea = () => {
     } else {
       showControls();
     }
+  }
+
+  const onReady = () => {
+    calculateHeight();
+    if (roomId && !host) {
+      setTimeout(() => {
+        requestSync();
+      }, 1000);
+    }
+  }
+
+  const onProgress = (event) => {
+    dispatch(setTime(event.playedSeconds));
+    dispatch(setPlayed(event.played));
+    dispatch(setLoaded(event.loaded));
   }
 
   const onDuration = (duration) => {
@@ -148,20 +169,9 @@ const VideoArea = () => {
               muted={muted}
               playing={playing}
               volume={volume}
-              progressInterval={500}
-              onReady={() => {
-                calculateHeight();
-                if (roomId && !host) {
-                  setTimeout(() => {
-                    requestSync();
-                  }, 1000);
-                }
-              }}
-              onProgress={(event) => {
-                dispatch(setTime(event.playedSeconds));
-                dispatch(setPlayed(event.played));
-                dispatch(setLoaded(event.loaded));
-              }}
+              progressInterval={250}
+              onReady={onReady}
+              onProgress={onProgress}
               onDuration={onDuration}
               onError={onError}
             />

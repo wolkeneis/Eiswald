@@ -9,6 +9,7 @@
   align-items: center;
   flex-direction: row;
   flex-shrink: 0;
+  position: relative;
   .primary-header {
     padding: {
       left: 10%;
@@ -33,9 +34,30 @@
   }
   .secondary-header {
     padding: {
-      left: 10%;
+      left: 0.5rem;
     }
     transition: all 500ms ease;
+    .BackButton {
+      @extend .link-clean;
+      margin: {
+        top: .5rem;
+        left: 1.5rem;
+        right: 1.5rem;
+      }
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      box-sizing: content-box;
+      text-align: center;
+      img {
+        width: 2rem;
+        height: 2rem;
+      }
+      span {
+        margin: auto;
+        margin-left: 1rem;
+      }
+    }
     &-enter {
       position: absolute;
       transform: translateX(50vw);

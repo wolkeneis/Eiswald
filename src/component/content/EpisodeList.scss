@@ -9,17 +9,11 @@
   margin: .5rem;
   display: flex;
   flex-direction: column;
-}
-
-.NativeEpisodeList {
-  width: 85vw;
-  max-width: 500px;
-  min-height: 50vh;
-  height: 60vh;
-  max-height: 80vh;
-  margin: .5rem;
-  display: flex;
-  flex-direction: column;
+  &.native {
+    min-width: initial;
+    width: 85vw;
+    margin: 1rem;
+  }
 }
 
 .ListHeader {

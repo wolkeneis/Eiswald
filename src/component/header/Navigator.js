@@ -1,4 +1,5 @@
 import { lazy, Suspense, useRef } from "react";
+import { useSelector } from "react-redux";
 import { Route, useHistory } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import { createRoom } from "../../logic/connection";
@@ -15,14 +16,22 @@ const ProfileSettings = lazy(() => import("../settings/pages/ProfileSettings"));
 const NodeSettings = lazy(() => import("../settings/pages/NodeSettings"));
 
 const Navigator = () => {
+  const native = useSelector(state => state.interface.native);
   const history = useHistory();
   const profileRef = useRef();
   const nodesRef = useRef();
   const settingsRef = useRef();
 
+  const onClick = () => {
+    createRoom();
+    if (native) {
+      history.push("/watch");
+    }
+  }
+
   return (
     <nav className="Navigator">
-      <IconButton buttonName="Create Room" imageAlt="Create Room Icon" imageSource={createIcon} onClick={() => createRoom()} />
+      <IconButton buttonName="Create Room" imageAlt="Create Room Icon" imageSource={createIcon} onClick={onClick} />
       <IconButton buttonName="Settings" imageAlt="Settings Icon" imageSource={settingsIcon} onClick={() => history.push("/settings")} />
       <Route path={"/settings"}>
         <SettingsPage>

@@ -28,7 +28,13 @@ function App() {
       const native = info.operatingSystem === "ios" || info.operatingSystem === "android";
       dispatch(setNative(native));
       if (!Element.prototype.requestFullscreen) {
-        Element.prototype.requestFullscreen = Element.prototype.mozRequestFullscreen || Element.prototype.mozRequestFullScreen || Element.prototype.webkitRequestFullscreen || Element.prototype.msRequestFullscreen;
+        Element.prototype.requestFullscreen =
+          Element.prototype.mozRequestFullscreen ||
+          Element.prototype.mozRequestFullScreen ||
+          Element.prototype.webkitRequestFullscreen ||
+          Element.prototype.webkitEnterFullscreen ||
+          Element.prototype.webkitEnterFullScreen ||
+          Element.prototype.msRequestFullscreen;
       }
       if (native) {
         const queryList = window.matchMedia("(orientation: portrait)");
@@ -75,7 +81,7 @@ function App() {
             </Switch>
           </Route>
           <Route from="/invite/:roomId">
-            <InviteHandler to="/" />
+            <InviteHandler />
           </Route>
           <Route path="/authorize"
             children={({ match }) => {
@@ -121,6 +127,7 @@ function App() {
 
 const InviteHandler = ({ children, ...props }) => {
   const [requestSent, setRequestSent] = useState(false);
+  const native = useSelector(state => state.interface.native);
   const { roomId } = useParams();
 
   useEffect(() => {
@@ -128,12 +135,12 @@ const InviteHandler = ({ children, ...props }) => {
       joinRoom(roomId);
       setRequestSent(true);
     }
-  }, [roomId]);
+  }, [roomId, native]);
 
   return (
     <>
-      {requestSent &&
-        <Redirect {...props} >
+      {requestSent && native !== undefined &&
+        <Redirect to={native ? "/watch" : "/"} {...props} >
           {children}
         </Redirect>
       }

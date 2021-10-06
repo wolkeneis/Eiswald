@@ -3,6 +3,18 @@ import germanyIcon from "../media/languages/germany.svg";
 import japanIcon from "../media/languages/japan.svg";
 import { wrapPromise } from "./utils";
 
+const fetchNodeState = (origin) => {
+  return fetch(new Request(origin))
+    .then(response => response.json());
+}
+
+const fetchNodeProfile = (origin) => {
+  return fetch(new Request(`${origin}/profile`, {
+    credentials: "include",
+    redirect: "manual"
+  }))
+    .then(response => response.json());
+}
 
 const fetchPlaylists = (node) => {
   return fetch(node.origin + "/content/playlists/", {
@@ -73,7 +85,7 @@ function seasonName(season) {
   return season === -1 ? undefined : season === 0 ? "Specials" : `Season ${season}`;
 }
 
-export { fetchPlaylists, fetchThumbnail, fetchPlaylist, fetchAvatar };
+export { fetchNodeState, fetchNodeProfile, fetchPlaylists, fetchThumbnail, fetchPlaylist, fetchAvatar };
 export { nodeStateClass, nodeStateText };
 export { languageImage, languageAlt, seasonName };
 

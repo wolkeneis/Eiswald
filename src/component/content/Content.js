@@ -1,7 +1,8 @@
 import { Storage } from "@capacitor/storage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setNodes } from "../../redux/contentSlice";
+import { fetchPlaylists } from "../../logic/node";
+import { addPlaylistPreviews, clearPlaylistPreviews, setNodes } from "../../redux/contentSlice";
 import "./Content.scss";
 import PlaylistPreviews from "./PlaylistPreviews";
 import VideoArea from "./VideoArea";
@@ -21,8 +22,26 @@ const Content = () => {
   useEffect(() => {
     if (nodes) {
       Storage.set({ key: "nodes", value: JSON.stringify(nodes) });
+      for (const host in nodes) {
+        if (Object.hasOwnProperty.call(nodes, host)) {
+          const node = nodes[host];
+          if (node.state !== "maintenance") {
+            try {
+              fetchPlaylists(node)
+                .then(response => response.json())
+                .then(fetchedPreviews => {
+                  fetchedPreviews.forEach(fetchedPreview => fetchedPreview.node = node.origin);
+                  dispatch(addPlaylistPreviews(fetchedPreviews));
+                }).catch(() => { });
+            } catch { }
+          }
+        }
+      }
     }
-  }, [nodes]);
+    return () => {
+      dispatch(clearPlaylistPreviews());
+    }
+  }, [dispatch, nodes]);
 
   return (
     <div className="Content">

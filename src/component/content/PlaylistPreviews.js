@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPlaylist, fetchPlaylists, fetchThumbnail } from "../../logic/node";
-import { addPlaylistPreviews, clearPlaylistPreviews, selectPlaylist, setPlaylist } from "../../redux/contentSlice";
+import { useHistory } from "react-router";
+import { fetchPlaylist, fetchThumbnail } from "../../logic/node";
+import { selectPlaylist, setPlaylist } from "../../redux/contentSlice";
 import { PlaylistPreviewSkeleton } from "../Loader";
 import "./PlaylistPreviews.scss";
 
@@ -10,28 +11,6 @@ const PlaylistPreviews = ({ nodes }) => {
   const [search, setSearch] = useState("");
   const timeout = useRef();
   const playlistPreviews = useSelector(state => state.content.playlistPreviews);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    for (const host in nodes) {
-      if (Object.hasOwnProperty.call(nodes, host)) {
-        const node = nodes[host];
-        if (node.state !== "maintenance") {
-          try {
-            fetchPlaylists(node)
-              .then(response => response.json())
-              .then(fetchedPreviews => {
-                fetchedPreviews.forEach(fetchedPreview => fetchedPreview.node = node.origin);
-                dispatch(addPlaylistPreviews(fetchedPreviews));
-              }).catch(() => { });
-          } catch { }
-        }
-      }
-    }
-    return () => {
-      dispatch(clearPlaylistPreviews());
-    }
-  }, [dispatch, nodes]);
 
   const onChange = (event) => {
     clearTimeout(timeout.current);
@@ -87,7 +66,9 @@ SearchBox.propTypes = {
 
 const PlaylistPreview = ({ node, playlistPreview }) => {
   const [source, setSource] = useState();
+  const native = useSelector(state => state.interface.native);
   const playlists = useSelector(state => state.content.playlists);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -115,6 +96,9 @@ const PlaylistPreview = ({ node, playlistPreview }) => {
           dispatch(setPlaylist(fetchedPlaylist));
           dispatch(selectPlaylist(fetchedPlaylist));
         });
+    }
+    if (native) {
+      history.push("/watch");
     }
   }
 

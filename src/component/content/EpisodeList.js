@@ -63,7 +63,7 @@ const EpisodeList = () => {
   return (
     <>
       {playlist &&
-        <div ref={episodeList} className={native ? "NativeEpisodeList" : "EpisodeList"}>
+        <div ref={episodeList} className={`EpisodeList ${native ? "native" : ""}`}>
           {seasons && availabilities && language !== undefined && season !== undefined &&
             <>
               <ListHeader playlist={playlist} seasons={seasons} availabilities={availabilities} language={language} season={season} />

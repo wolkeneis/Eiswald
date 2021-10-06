@@ -75,7 +75,8 @@ const Connection = ({ provider, connection, loggedIn }) => {
 
 Connection.propTypes = {
   provider: PropTypes.object.isRequired,
-  connection: PropTypes.object
+  connection: PropTypes.object,
+  loggedIn: PropTypes.bool
 }
 
 export default ProfileConnections;

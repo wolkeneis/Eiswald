@@ -3,7 +3,8 @@ import { lazy, Suspense, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route } from "react-router";
 import { CSSTransition } from "react-transition-group";
-import { setNodes } from "../../redux/contentSlice";
+import { fetchPlaylists } from "../../logic/node";
+import { addPlaylistPreviews, clearPlaylistPreviews, setNodes } from "../../redux/contentSlice";
 import Loader from "../Loader";
 import Settings from "../settings/pages/Settings";
 import { NativeSettingsPage } from "../settings/SettingsPage";
@@ -21,6 +22,7 @@ const NativeContent = () => {
   const settingsRef = useRef();
   const downloadsRef = useRef();
   const homeRef = useRef();
+  const watchRef = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,8 +36,26 @@ const NativeContent = () => {
   useEffect(() => {
     if (nodes) {
       Storage.set({ key: "nodes", value: JSON.stringify(nodes) });
+      for (const host in nodes) {
+        if (Object.hasOwnProperty.call(nodes, host)) {
+          const node = nodes[host];
+          if (node.state !== "maintenance") {
+            try {
+              fetchPlaylists(node)
+                .then(response => response.json())
+                .then(fetchedPreviews => {
+                  fetchedPreviews.forEach(fetchedPreview => fetchedPreview.node = node.origin);
+                  dispatch(addPlaylistPreviews(fetchedPreviews));
+                }).catch(() => { });
+            } catch { }
+          }
+        }
+      }
     }
-  }, [nodes]);
+    return () => {
+      dispatch(clearPlaylistPreviews());
+    }
+  }, [dispatch, nodes]);
 
   return (
     <div className="NativeContent">
@@ -107,6 +127,20 @@ const NativeContent = () => {
           </CSSTransition>
         )}
       </Route>
+      <Route path={"/watch"} exact>
+        {({ match }) => (
+          <CSSTransition
+            nodeRef={watchRef}
+            in={match !== null}
+            unmountOnExit
+            timeout={500}
+            classNames="content-menu">
+            <div ref={watchRef} className="content-menu">
+              <VideoArea />
+            </div>
+          </CSSTransition>
+        )}
+      </Route>
       <Route path={"/"} exact>
         {({ match }) => (
           <CSSTransition
@@ -116,7 +150,6 @@ const NativeContent = () => {
             timeout={500}
             classNames="content-menu">
             <div ref={homeRef} className="content-menu">
-              <VideoArea />
               <PlaylistPreviews nodes={nodes ?? {}} />
             </div>
           </CSSTransition>
