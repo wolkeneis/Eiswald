@@ -4,7 +4,7 @@ import { play, setSource, setTime } from "../redux/playerSlice";
 import { clearRoom, setHost, setMode, setRoomId, setUsers } from "../redux/roomSlice";
 import store from "../redux/store";
 
-const socket = io(process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev");
+const socket = io((process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"), { withCredentials: true });
 
 function createRoom() {
   const state = store.getState();
