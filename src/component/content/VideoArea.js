@@ -13,7 +13,7 @@ import VideoControls from "./VideoControls";
 const VideoArea = () => {
   const [controlsVisible, setControlsVisible] = useState(false);
   const [muted, setMuted] = useState(false);
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const nodes = useSelector(state => state.content.nodes);
   const playlistPreviews = useSelector(state => state.content.playlistPreviews);
   const playlist = useSelector(state => state.content.playlist);
@@ -43,7 +43,7 @@ const VideoArea = () => {
         idle.current = idle.current + 500;
       }
     }
-    if (idle.current >= (native || isTouchDevice() ? 3500 : 2500)) {
+    if (idle.current >= (mobile || isTouchDevice() ? 3500 : 2500)) {
       setControlsVisible(false);
       idle.current = 0;
     }
@@ -151,9 +151,9 @@ const VideoArea = () => {
   }
 
   return (
-    <div className={`VideoArea ${native ? "native" : ""}`}>
+    <div className={`VideoArea ${mobile ? "mobile" : ""}`}>
       {source &&
-        <div ref={videoContainer} className={`VideoPlayer ${native ? "native" : ""}`}>
+        <div ref={videoContainer} className={`VideoPlayer ${mobile ? "mobile" : ""}`}>
           <div id="video-wrapper" ref={videoWrapper}
             style={controlsVisible ? {} : { cursor: "none" }}
             onMouseEnter={showControls}

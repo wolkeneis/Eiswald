@@ -8,7 +8,7 @@ import "./App.scss";
 import Loader from "./component/Loader";
 import QueryRedirect from "./component/QueryRedirect";
 import { joinRoom } from "./logic/connection";
-import { selectTheme, setNative } from "./redux/interfaceSlice";
+import { selectTheme, setMobile } from "./redux/interfaceSlice";
 
 const Content = lazy(() => import("./component/content/Content"));
 const NativeContent = lazy(() => import("./component/content/NativeContent"));
@@ -19,14 +19,14 @@ const NativeHeader = lazy(() => import("./component/header/NativeHeader"));
 const Authorize = lazy(() => import("./component/settings/pages/Authorize"));
 
 function App() {
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const theme = useSelector(state => state.interface.theme);
   const dispatch = useDispatch();
 
   useEffect(() => {
     Device.getInfo().then(info => {
-      const native = info.operatingSystem === "ios" || info.operatingSystem === "android";
-      dispatch(setNative(native));
+      const mobile = info.operatingSystem === "ios" || info.operatingSystem === "android";
+      dispatch(setMobile(mobile));
       if (!Element.prototype.requestFullscreen) {
         Element.prototype.requestFullscreen =
           Element.prototype.mozRequestFullscreen ||
@@ -36,7 +36,7 @@ function App() {
           Element.prototype.webkitEnterFullScreen ||
           Element.prototype.msRequestFullscreen;
       }
-      if (native) {
+      if (mobile) {
         const queryList = window.matchMedia("(orientation: portrait)");
         queryList.addEventListener("change", event => {
           const video = document.getElementById("video-wrapper");
@@ -70,7 +70,7 @@ function App() {
 
 
   return (
-    <div className={`App ${theme} ${native ? "native" : ""}`}>
+    <div className={`App ${theme} ${mobile ? "mobile" : ""}`}>
       <BrowserRouter>
         <Switch>
           <Route path="/redirect">
@@ -85,7 +85,7 @@ function App() {
           </Route>
           <Route path="/authorize"
             children={({ match }) => {
-              return native !== undefined && (native
+              return mobile !== undefined && (mobile
                 ? (<>
                   <Suspense fallback={<Loader />}>
                     <NativeHeader />
@@ -102,7 +102,7 @@ function App() {
 
           </Route>
           <Route path={"/"}>
-            {native !== undefined && (native
+            {mobile !== undefined && (mobile
               ? (<>
                 <Suspense fallback={<Loader />}>
                   <NativeHeader />
@@ -127,7 +127,7 @@ function App() {
 
 const InviteHandler = ({ children, ...props }) => {
   const [requestSent, setRequestSent] = useState(false);
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const { roomId } = useParams();
 
   useEffect(() => {
@@ -135,12 +135,12 @@ const InviteHandler = ({ children, ...props }) => {
       joinRoom(roomId);
       setRequestSent(true);
     }
-  }, [roomId, native]);
+  }, [roomId, mobile]);
 
   return (
     <>
-      {requestSent && native !== undefined &&
-        <Redirect to={native ? "/watch" : "/"} {...props} >
+      {requestSent && mobile !== undefined &&
+        <Redirect to={mobile ? "/watch" : "/"} {...props} >
           {children}
         </Redirect>
       }

@@ -2,13 +2,13 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import "./SettingsPage.scss";
 
-const SettingsPage = ({ children, native, style }) => {
+const SettingsPage = ({ children, mobile, style }) => {
   const history = useHistory();
 
   return (
     <>
       {
-        <div style={style} className={native ? "NativeSettingsPage" : "SettingsPage"}>
+        <div style={style} className={mobile ? "NativeSettingsPage" : "SettingsPage"}>
           <CloseButton onClick={() => history.push("/")} />
           {children}
         </div>
@@ -22,7 +22,7 @@ SettingsPage.defaultProps = {
 }
 
 SettingsPage.propTypes = {
-  native: PropTypes.bool,
+  mobile: PropTypes.bool,
   style: PropTypes.object
 }
 

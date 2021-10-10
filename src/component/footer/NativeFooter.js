@@ -11,7 +11,7 @@ import IconLink from "../IconLink";
 import "./NativeFooter.scss";
 
 const NativeFooter = () => {
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const history = useHistory();
 
   return (
@@ -27,7 +27,7 @@ const NativeFooter = () => {
           <Route path="/">
             <IconLink linkName="List" imageAlt="List Icon" imageSource={listIcon} destination="/" />
             <IconButton buttonName="Watch" imageAlt="Watch Icon" imageSource={watchIcon} onClick={() => {
-              if (native) {
+              if (mobile) {
                 history.push("/watch");
               }
             }} />

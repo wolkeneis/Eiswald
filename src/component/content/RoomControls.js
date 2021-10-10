@@ -12,7 +12,7 @@ import IconButton from "../IconButton";
 import "./RoomControls.scss";
 
 const RoomControls = () => {
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const roomId = useSelector(state => state.room.roomId);
   const mode = useSelector(state => state.room.mode); //SHOW MODE SWITCHER
   const host = useSelector(state => state.room.host); //ALLOW PROMOTING
@@ -43,7 +43,7 @@ const RoomControls = () => {
   return (
     <>
       {roomId &&
-        <div className={`RoomControls ${native ? "native" : ""}`}>
+        <div className={`RoomControls ${mobile ? "mobile" : ""}`}>
           <div className="Buttons">
             <div className="HorizontalBox">
               <div className="InviteButton">

@@ -66,7 +66,7 @@ SearchBox.propTypes = {
 
 const PlaylistPreview = ({ node, playlistPreview }) => {
   const [source, setSource] = useState();
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const playlists = useSelector(state => state.content.playlists);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -97,7 +97,7 @@ const PlaylistPreview = ({ node, playlistPreview }) => {
           dispatch(selectPlaylist(fetchedPlaylist));
         });
     }
-    if (native) {
+    if (mobile) {
       history.push("/watch");
     }
   }

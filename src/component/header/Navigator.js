@@ -16,7 +16,7 @@ const ProfileSettings = lazy(() => import("../settings/pages/ProfileSettings"));
 const NodeSettings = lazy(() => import("../settings/pages/NodeSettings"));
 
 const Navigator = () => {
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const history = useHistory();
   const profileRef = useRef();
   const nodesRef = useRef();
@@ -24,7 +24,7 @@ const Navigator = () => {
 
   const onClick = () => {
     createRoom();
-    if (native) {
+    if (mobile) {
       history.push("/watch");
     }
   }

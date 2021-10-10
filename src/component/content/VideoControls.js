@@ -141,7 +141,7 @@ const RightControlContainer = () => {
 
 
 const VolumeChanger = () => {
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const volume = useSelector(state => state.player.volume);
   const dispatch = useDispatch();
   const slider = useRef();
@@ -156,7 +156,7 @@ const VolumeChanger = () => {
 
   return (
     <>
-      {!native && !isTouchDevice() &&
+      {!mobile && !isTouchDevice() &&
         <div className="VolumeChanger">
           <img src={volumeIcon} alt="Volume" />
           <div {...bind()} ref={slider} className="VolumeSlider">

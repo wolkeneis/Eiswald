@@ -10,7 +10,7 @@ import { play, setTime } from "../../redux/playerSlice";
 import "./EpisodeList.scss";
 
 const EpisodeList = () => {
-  const native = useSelector(state => state.interface.native);
+  const mobile = useSelector(state => state.interface.mobile);
   const playlist = useSelector(state => state.content.playlist);
   const seasons = useSelector(state => state.content.seasons);
   const availabilities = useSelector(state => state.content.availabilities);
@@ -63,7 +63,7 @@ const EpisodeList = () => {
   return (
     <>
       {playlist &&
-        <div ref={episodeList} className={`EpisodeList ${native ? "native" : ""}`}>
+        <div ref={episodeList} className={`EpisodeList ${mobile ? "mobile" : ""}`}>
           {seasons && availabilities && language !== undefined && season !== undefined &&
             <>
               <ListHeader playlist={playlist} seasons={seasons} availabilities={availabilities} language={language} season={season} />
