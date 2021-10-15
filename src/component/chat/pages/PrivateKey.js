@@ -72,6 +72,7 @@ const PrivateKey = () => {
   }
 
   const decrypt = () => {
+    setWarning();
     setWorking(true);
     setTimeout(() => {
       decryptKeyPair(encryptedKeyPair.read(), password)
@@ -81,7 +82,10 @@ const PrivateKey = () => {
           }
           setWorking(false);
         })
-        .catch(() => setWorking(false));
+        .catch(() => {
+          setWorking(false);
+          setWarning("Incorrect login information. try again");
+        });
     }, 250);
   }
 
@@ -132,6 +136,9 @@ const PrivateKey = () => {
               <input className="DecryptionPasswordField" type="password" name="Decrypt Password" placeholder="Password..." onChange={onChange} onKeyPress={onKeyPress} />
               <button aria-label="Decrypt Private Key" className="DecryptButton" onClick={onClick}>Decrypt</button>
             </div>
+            {warning &&
+              <span className="Warning">{warning}</span>
+            }
             {working && <Loader />}
             <p style={{ color: "var(--color-font-hover)" }}>
               If you have forgotten your password or are incorrectly asked
