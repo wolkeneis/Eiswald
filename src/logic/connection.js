@@ -91,7 +91,5 @@ socket.on("sync request", (data, callback) => {
   });
 });
 
-window.commands = { sync, requestSync };
-
 export { createRoom, joinRoom, leaveRoom, sync, requestSync };
 

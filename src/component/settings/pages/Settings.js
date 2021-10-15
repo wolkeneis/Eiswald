@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import contactIcon from "../../../media/contacts.svg";
 import moonIcon from "../../../media/moon.svg";
 import nodesIcon from "../../../media/nodes.svg";
 import profileIcon from "../../../media/profile.svg";
@@ -20,6 +21,9 @@ const Settings = () => {
       </SettingsLinkItem>
       <SettingsLinkItem linkName="Node Settings" imageAlt="Node Connections" imageSource={nodesIcon} destination="/settings/nodes">
         <span>Nodes</span>
+      </SettingsLinkItem>
+      <SettingsLinkItem linkName="Contact Settings" imageAlt="Contacts" imageSource={contactIcon} destination="/settings/contacts">
+        <span>Contacts</span>
       </SettingsLinkItem>
       <SettingsButtonItem
         buttonName="Theme Toggler"

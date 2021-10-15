@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
+import QRCode from "qrcode.react";
 import { Suspense, useEffect, useState } from "react";
-import { fetchAvatar, fetchProfile } from "../../../logic/profile";
+import Switch from "react-switch";
+import { fetchAvatar, fetchProfile, updatePrivacy } from "../../../logic/profile";
 import Loader from "../../Loader";
 import ProfileConnections from "./ProfileConnections";
 import "./ProfileSettings.scss";
-
 
 const ProfileSettings = () => {
   const [profile, setProfile] = useState();
@@ -22,7 +23,7 @@ const ProfileSettings = () => {
       <div className="Profile">
         {profile && profile.read()
           ? <Profile profile={profile && profile.read()} />
-          : <span>Du bist nicht angemeldet</span>
+          : <span>You're not logged in</span>
         }
       </div>
       {profile
@@ -32,12 +33,26 @@ const ProfileSettings = () => {
       <Suspense fallback={<Loader />}>
         <ProfileConnections loggedIn={(profile && profile.read()) ? true : false} />
       </Suspense>
+      {profile && profile.read() &&
+        <div className="QRCodeSection">
+          <div className="QRCodeContainer">
+            <div className="QRCode">
+              <QRCode
+                value={`${window.location.origin}/addcontact/${profile.read().id}`}
+                renderAs="svg"
+                size={160} />
+            </div>
+            <span>{profile.read().username}</span>
+          </div>
+        </div>
+      }
     </>
   );
 }
 
 const Profile = ({ profile }) => {
   const [source, setSource] = useState();
+  const [privateProfile, setPrivateProfile] = useState(profile ? profile.private : false);
 
   useEffect(() => {
     if (profile && profile.avatar) {
@@ -55,11 +70,26 @@ const Profile = ({ profile }) => {
     };
   }, [source]);
 
+  const onPrivacyChange = (checked) => {
+    updatePrivacy(checked)
+      .then((privateProfile) => setPrivateProfile(privateProfile))
+      .catch(() => { });
+  }
+
   return (
-    <div className="ProfileInfo">
-      <img alt="Avatar" src={source && source.read()} />
-      <span>{profile.username}</span>
-    </div>
+    <>
+      <div className="ProfileInfo">
+        <img alt="Avatar" src={source && source.read()} />
+        <span>{profile.username}</span>
+      </div>
+      <div className="PrivacySettings">
+        <Switch onChange={onPrivacyChange} checked={privateProfile} />
+        <span>Private Profile</span>
+      </div>
+      <div className="UserIdentifier">
+        <span>{profile.id}</span>
+      </div>
+    </>
   );
 }
 

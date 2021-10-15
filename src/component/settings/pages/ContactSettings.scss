@@ -1,0 +1,68 @@
+@import '../../../general';
+
+.ProfileRedirect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .ProfileSettingsButton {
+    @extend .button-clean;
+    background: hsl(113, 62%, 49%);
+    border-radius: .5rem;
+    color: var(--color-font);
+    padding: 1rem;
+  }
+}
+
+.AddContactField {
+  background: var(--color-element);
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  input {
+    @extend .text-input-clean;
+    background: var(--color-higher-element);
+    border-radius: .65rem;
+    width: calc(85% - 2.5rem);
+    padding: .5rem;
+  }
+  .IconButton {
+    margin: 0;
+  }
+}
+
+.Contact {
+  background: var(--color-element);
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  span {
+    color: var(--color-font);
+    padding-left: .75rem;
+    padding-right: .25rem;
+  }
+  img {
+    border-radius: 50%;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .RemoveContact {
+    @extend .button-clean;
+    background: var(--color-higher-element);
+    color: var(--color-font);
+    border-radius: .5rem;
+    height: 2rem;
+    width: 4rem;
+    margin-left: auto;
+    &:hover {
+      color: red;
+      cursor: pointer;
+    }
+  }
+}

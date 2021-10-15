@@ -32,11 +32,19 @@
   .NativeContent {
     height: calc(100% - 85px);
     padding-right: 4rem;
+    .content-menu {
+      width: calc(100% - 4rem);
+      height: 100%;
+    }
   }
 }
 
 @media (orientation: portrait) {
   .NativeContent {
     height: calc(100% - 85px - 4rem);
+    .content-menu {
+      width: 100%;
+      height: calc(100%);
+    }
   }
 }

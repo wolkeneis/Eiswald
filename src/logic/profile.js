@@ -36,6 +36,22 @@ function fetchProfile() {
     .catch(() => { }));
 }
 
+function updatePrivacy(privateProfile) {
+  return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/privacy`, {
+    method: "POST",
+    credentials: "include",
+    redirect: "manual",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      private: privateProfile
+    })
+  }))
+    .then(response => response.json())
+    .then(profile => profile.private);
+}
+
 function fetchProfileConnections() {
   return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/connections`, {
     method: "POST",
@@ -50,5 +66,5 @@ function fetchProfileConnections() {
 
 
 export { providers };
-export { fetchAvatar, fetchProfile, fetchProfileConnections };
+export { fetchAvatar, fetchProfile, fetchProfileConnections, updatePrivacy };
 

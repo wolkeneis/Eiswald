@@ -35,7 +35,7 @@ const isElementInViewport = (element) => {
 }
 
 function isTouchDevice() {
-  return (('ontouchstart' in window) ||
+  return (("ontouchstart" in window) ||
     (navigator.msMaxTouchPoints > 0));
 }
 

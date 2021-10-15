@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
-import { Route, Switch, useHistory } from "react-router";
+import { Route, Switch } from "react-router";
 import { createRoom } from "../../logic/connection";
+import chatIcon from "../../media/chat.svg";
 import createIcon from "../../media/create-room.svg";
 import downloadIcon from "../../media/download.svg";
 import listIcon from "../../media/list.svg";
@@ -11,9 +11,6 @@ import IconLink from "../IconLink";
 import "./NativeFooter.scss";
 
 const NativeFooter = () => {
-  const mobile = useSelector(state => state.interface.mobile);
-  const history = useHistory();
-
   return (
     <footer className="NativeFooter">
       <nav className="NativeNavigator">
@@ -22,16 +19,14 @@ const NativeFooter = () => {
             <IconLink linkName="List" imageAlt="List Icon" imageSource={listIcon} destination="/" />
             <IconButton buttonName="Create Room" imageAlt="Create Room Icon" imageSource={createIcon} onClick={() => createRoom()} />
             <IconLink linkName="Downloads" imageAlt="Download Icon" imageSource={downloadIcon} destination="/downloads" />
+            <IconLink linkName="Chat" imageAlt="Chat Icon" imageSource={chatIcon} destination="/chat" />
             <IconLink linkName="Settings" imageAlt="Settings Icon" imageSource={settingsIcon} destination="/settings" />
           </Route>
           <Route path="/">
             <IconLink linkName="List" imageAlt="List Icon" imageSource={listIcon} destination="/" />
-            <IconButton buttonName="Watch" imageAlt="Watch Icon" imageSource={watchIcon} onClick={() => {
-              if (mobile) {
-                history.push("/watch");
-              }
-            }} />
+            <IconLink linkName="Watch" imageAlt="Watch Icon" imageSource={watchIcon} destination="/watch" />
             <IconLink linkName="Downloads" imageAlt="Download Icon" imageSource={downloadIcon} destination="/downloads" />
+            <IconLink linkName="Chat" imageAlt="Chat Icon" imageSource={chatIcon} destination="/chat" />
             <IconLink linkName="Settings" imageAlt="Settings Icon" imageSource={settingsIcon} destination="/settings" />
           </Route>
         </Switch>

@@ -1,0 +1,123 @@
+@import '../../../general';
+
+.PrivateKey {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  p {
+    color: var(--color-font);
+    max-width: 20rem;
+  }
+  .ProfileRedirect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .ProfileSettingsButton {
+      @extend .button-clean;
+      background: hsl(113, 62%, 49%);
+      border-radius: .5rem;
+      color: var(--color-font);
+      padding: 1rem;
+    }
+  }
+  .ForgotPasswordButton {
+    @extend .button-clean;
+    background: hsl(17, 91%, 46%);
+    border-radius: .5rem;
+    color: var(--color-font);
+    margin: 1rem;
+    padding: 1rem;
+  }
+  .Credentials {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    input {
+      margin: .5rem;
+      transform: scale(1.25);
+    }
+    label {
+      margin: .5rem;
+      color: var(--color-font);
+    }
+  }
+  .Warning {
+    color: hsl(17, 91%, 46%);
+  }
+  .Suggestion {
+    color: hsl(28, 81%, 50%);
+  }
+  .Encrypt {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    .EncryptionPasswordField {
+      @extend .text-input-clean;
+      background: var(--color-element);
+      border-radius: .5rem;
+      margin: .25rem;
+      padding: .75rem;
+      &.strength-0 {
+        background: linear-gradient(to right, hsl(14, 92%, 46%) 100%, transparent), linear-gradient(to right, var(--color-element) 100%, transparent);
+        background-size: 20% 3px, 100% 100%;
+        background-repeat: no-repeat;
+        background-position: 0 100%, 0 0;
+      }
+      &.strength-1 {
+        background: linear-gradient(to right, hsl(28, 81%, 50%) 100%, transparent), linear-gradient(to right, var(--color-element) 100%, transparent);
+        background-size: 40% 3px, 100% 100%;
+        background-repeat: no-repeat;
+        background-position: 0 100%, 0 0;
+      }
+      &.strength-2 {
+        background: linear-gradient(to right, hsl(56, 86%, 46%) 100%, transparent), linear-gradient(to right, var(--color-element) 100%, transparent);
+        background-size: 60% 3px, 100% 100%;
+        background-repeat: no-repeat;
+        background-position: 0 100%, 0 0;
+      }
+      &.strength-3 {
+        background: linear-gradient(to right, hsl(113, 62%, 49%) 100%, transparent), linear-gradient(to right, var(--color-element) 100%, transparent);
+        background-size: 80% 3px, 100% 100%;
+        background-repeat: no-repeat;
+        background-position: 0 100%, 0 0;
+      }
+      &.strength-4 {
+        background: linear-gradient(to right, rgb(22, 102, 12) 100%, transparent), linear-gradient(to right, var(--color-element) 100%, transparent);
+        background-size: 100% 3px, 100% 100%;
+        background-repeat: no-repeat;
+        background-position: 0 100%, 0 0;
+      }
+    }
+    .EncryptButton {
+      @extend .button-clean;
+      background: hsl(28, 81%, 50%);
+      border-radius: .5rem;
+      color: var(--color-font);
+      margin: .25rem;
+      padding: .75rem;
+    }
+  }
+  .Decrypt {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    .DecryptionPasswordField {
+      @extend .text-input-clean;
+      background: var(--color-element);
+      border-radius: .5rem;
+      margin: .25rem;
+      padding: .75rem;
+    }
+    .DecryptButton {
+      @extend .button-clean;
+      background: hsl(113, 62%, 49%);
+      border-radius: .5rem;
+      color: var(--color-font);
+      margin: .25rem;
+      padding: .75rem;
+    }
+  }
+}

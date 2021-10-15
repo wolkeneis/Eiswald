@@ -25,7 +25,57 @@
     }
     span {
       color: var(--color-font);
-      padding-left: .5rem;
+      margin-left: .5rem;
+    }
+  }
+  .PrivacySettings {
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    span {
+      color: var(--color-font);
+      margin: {
+        left: auto;
+        right: auto;
+      }
+    }
+  }
+  .UserIdentifier {
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    span {
+      color: var(--color-font);
+      font-size: .75rem;
+      margin: {
+        left: auto;
+        right: auto;
+      }
+    }
+  }
+}
+
+.QRCodeSection {
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .QRCodeContainer {
+    background: var(--color-element);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    .QRCode {
+      background: white;
+      border-radius: .75rem;
+      padding: .8rem;
+    }
+    span {
+      color: var(--color-font);
+      margin-top: 1rem;
     }
   }
 }

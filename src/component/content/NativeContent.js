@@ -5,20 +5,28 @@ import { Route } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import { fetchPlaylists } from "../../logic/node";
 import { addPlaylistPreviews, clearPlaylistPreviews, setNodes } from "../../redux/contentSlice";
+import { NativeChatPage } from "../chat/ChatPage";
 import Loader from "../Loader";
-import Settings from "../settings/pages/Settings";
 import { NativeSettingsPage } from "../settings/SettingsPage";
 import "./NativeContent.scss";
 import PlaylistPreviews from "./PlaylistPreviews";
 import VideoArea from "./VideoArea";
 
+const PrivateKey = lazy(() => import("../chat/pages/PrivateKey"));
+const Chat = lazy(() => import("../chat/pages/Chat"));
+const ChatOverview = lazy(() => import("../chat/pages/ChatOverview"));
+const Settings = lazy(() => import("../settings/pages/Settings"));
 const ProfileSettings = lazy(() => import("../settings/pages/ProfileSettings"));
 const NodeSettings = lazy(() => import("../settings/pages/NodeSettings"));
+const ContactSettings = lazy(() => import("../settings/pages/ContactSettings"));
 
 const NativeContent = () => {
   const nodes = useSelector(state => state.content.nodes);
+  const chatOverviewRef = useRef();
+  const chatRef = useRef();
   const profileRef = useRef();
   const nodesRef = useRef();
+  const contactsRef = useRef();
   const settingsRef = useRef();
   const downloadsRef = useRef();
   const homeRef = useRef();
@@ -59,6 +67,45 @@ const NativeContent = () => {
 
   return (
     <div className="NativeContent">
+      <Route path="/chat/:userId" exact>
+        {({ match }) => (
+          <CSSTransition
+            nodeRef={chatRef}
+            in={match !== null}
+            unmountOnExit
+            timeout={500}
+            classNames="content-menu">
+            <div ref={chatRef} className="content-menu">
+              <NativeChatPage>
+                <Suspense fallback={<Loader />}>
+                  {match && match.params.userId && match.params.userId === "authenticate"
+                    ? <PrivateKey />
+                    : <Chat userId={match ? match.params.userId : undefined} />
+                  }
+                </Suspense>
+              </NativeChatPage>
+            </div>
+          </CSSTransition>
+        )}
+      </Route>
+      <Route path="/chat" exact>
+        {({ match }) => (
+          <CSSTransition
+            nodeRef={chatOverviewRef}
+            in={match !== null}
+            unmountOnExit
+            timeout={500}
+            classNames="content-menu">
+            <div ref={chatOverviewRef} className="content-menu">
+              <NativeChatPage>
+                <Suspense fallback={<Loader />}>
+                  <ChatOverview />
+                </Suspense>
+              </NativeChatPage>
+            </div>
+          </CSSTransition>
+        )}
+      </Route>
       <Route path="/settings/profile" exact>
         {({ match }) => (
           <CSSTransition
@@ -89,6 +136,24 @@ const NativeContent = () => {
               <NativeSettingsPage>
                 <Suspense fallback={<Loader />}>
                   <NodeSettings />
+                </Suspense>
+              </NativeSettingsPage>
+            </div>
+          </CSSTransition>
+        )}
+      </Route>
+      <Route path="/settings/contacts" exact>
+        {({ match }) => (
+          <CSSTransition
+            nodeRef={contactsRef}
+            in={match !== null}
+            unmountOnExit
+            timeout={500}
+            classNames="content-menu">
+            <div ref={contactsRef} className="content-menu">
+              <NativeSettingsPage>
+                <Suspense fallback={<Loader />}>
+                  <ContactSettings />
                 </Suspense>
               </NativeSettingsPage>
             </div>

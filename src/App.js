@@ -1,3 +1,4 @@
+import { Capacitor } from "@capacitor/core";
 import { Device } from "@capacitor/device";
 import { Storage } from "@capacitor/storage";
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -8,7 +9,10 @@ import "./App.scss";
 import Loader from "./component/Loader";
 import QueryRedirect from "./component/QueryRedirect";
 import { joinRoom } from "./logic/connection";
-import { selectTheme, setMobile } from "./redux/interfaceSlice";
+import { addContact } from "./logic/contacts";
+import "./logic/polyfills";
+import { initializeKeys } from "./logic/signal";
+import { selectTheme, setMobile, setNative } from "./redux/interfaceSlice";
 
 const Content = lazy(() => import("./component/content/Content"));
 const NativeContent = lazy(() => import("./component/content/NativeContent"));
@@ -24,18 +28,12 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const native = Capacitor.isNativePlatform();
+    dispatch(setNative(native));
+    initializeKeys(native);
     Device.getInfo().then(info => {
       const mobile = info.operatingSystem === "ios" || info.operatingSystem === "android";
       dispatch(setMobile(mobile));
-      if (!Element.prototype.requestFullscreen) {
-        Element.prototype.requestFullscreen =
-          Element.prototype.mozRequestFullscreen ||
-          Element.prototype.mozRequestFullScreen ||
-          Element.prototype.webkitRequestFullscreen ||
-          Element.prototype.webkitEnterFullscreen ||
-          Element.prototype.webkitEnterFullScreen ||
-          Element.prototype.msRequestFullscreen;
-      }
       if (mobile) {
         const queryList = window.matchMedia("(orientation: portrait)");
         queryList.addEventListener("change", event => {
@@ -82,6 +80,9 @@ function App() {
           </Route>
           <Route from="/invite/:roomId">
             <InviteHandler />
+          </Route>
+          <Route from="/addcontact/:userId">
+            <AddContactHandler />
           </Route>
           <Route path="/authorize"
             children={({ match }) => {
@@ -148,6 +149,25 @@ const InviteHandler = ({ children, ...props }) => {
   );
 }
 
+const AddContactHandler = ({ children, ...props }) => {
+  const [requestSent, setRequestSent] = useState(false);
+  const { userId } = useParams();
 
+  useEffect(() => {
+    if (userId) {
+      addContact(userId).then(() => setRequestSent(true)).catch(() => setRequestSent(true));
+    }
+  }, [userId]);
+
+  return (
+    <>
+      {requestSent &&
+        <Redirect to="/settings/contacts" {...props} >
+          {children}
+        </Redirect>
+      }
+    </>
+  );
+}
 
 export default App;

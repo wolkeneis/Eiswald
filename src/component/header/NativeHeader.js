@@ -12,7 +12,7 @@ const NativeHeader = () => {
 
   return (
     <header className="NativeHeader">
-      <Route path={["/settings/profile", "/settings/nodes"]} exact>
+      <Route path={["/settings/profile", "/settings/nodes", "/settings/contacts"]} exact>
         {({ match }) => (
           <CSSTransition
             nodeRef={back}
@@ -22,6 +22,22 @@ const NativeHeader = () => {
             classNames="secondary-header">
             <div ref={back} className="secondary-header">
               <BackButton linkName="Back to Settings" imageAlt="Back" imageSource={backIcon} destination="/settings">
+                <span>Back</span>
+              </BackButton>
+            </div>
+          </CSSTransition>
+        )}
+      </Route>
+      <Route path="/chat/:userId([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12})" exact>
+        {({ match }) => (
+          <CSSTransition
+            nodeRef={back}
+            in={match !== null}
+            unmountOnExit
+            timeout={500}
+            classNames="secondary-header">
+            <div ref={back} className="secondary-header">
+              <BackButton linkName="Back to Overview" imageAlt="Back" imageSource={backIcon} destination="/chat">
                 <span>Back</span>
               </BackButton>
             </div>
@@ -44,7 +60,7 @@ const NativeHeader = () => {
           </CSSTransition>
         )}
       </Route>
-      <Route path={["/", "/downloads", "/settings", "/authorize"]} exact>
+      <Route path={["/", "/downloads", "/chat", "/chat/authenticate", "/settings", "/authorize"]} exact>
         {({ match }) => (
           <CSSTransition
             nodeRef={branding}

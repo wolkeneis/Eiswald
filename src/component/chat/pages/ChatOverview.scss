@@ -1,0 +1,48 @@
+@import '../../../general';
+
+.UserProfile {
+  @extend .link-clean;
+  background: var(--color-element);
+  border-radius: 1rem;
+  min-width: 15rem;
+  max-width: 18rem;
+  margin: {
+    left: auto;
+    right: auto;
+  }
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  box-sizing: content-box;
+  text-align: center;
+  img {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+  }
+  span {
+    margin: auto;
+  }
+}
+
+.AddContact {
+  background: var(--color-accent);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  left: 2rem;
+  top: 2rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  .IconButton {
+    width: 1.75rem;
+    height: 1.75rem;
+    img {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
+}
