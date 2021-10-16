@@ -1,0 +1,111 @@
+@import '../../../general';
+
+.ProfileRedirect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .ProfileSettingsButton {
+    @extend .button-clean;
+    background: hsl(113, 62%, 49%);
+    border-radius: .5rem;
+    color: var(--color-font);
+    padding: 1rem;
+  }
+}
+
+.SecretInformation {
+  color: var(--color-font);
+  max-width: 18rem;
+  margin: auto;
+  padding: 1rem;
+}
+
+.Client {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .ClientContainer {
+    background: var(--color-element);
+    border-radius: 1rem;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .ClientIdentification {
+      background: var(--color-higher-element);
+      border-radius: 1rem;
+      width: calc(100% - 2rem);
+      padding: 1rem;
+      span {
+        color: var(--color-font);
+      }
+    }
+    span {
+      color: var(--color-font);
+    }
+    .ClientInformation {
+      width: calc(100% - 1.5rem);
+      margin: .75rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      span {
+        max-width: 14rem;
+        color: var(--color-font);
+        overflow: hidden;
+      }
+      .EmojiButton {
+        @extend .button-clean;
+        background: var(--color-higher-element);
+        color: var(--color-font);
+        border-radius: .5rem;
+        height: 2rem;
+        width: 4rem;
+        margin-left: auto;
+        cursor: pointer;
+        &:hover {
+          color: green;
+        }
+      }
+    }
+  }
+}
+
+.ClientCreator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .ClientCreateContainer {
+    background: var(--color-element);
+    border-radius: 1rem;
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+      color: var(--color-font);
+      margin: .25rem;
+    }
+    input {
+      @extend .text-input-clean;
+      background: var(--color-higher-element);
+      border-radius: .5rem;
+      box-sizing: border-box;
+      margin: .25rem;
+      padding: .75rem;
+    }
+    .AddButton {
+      @extend .button-clean;
+      background: var(--color-higher-element);
+      color: var(--color-font);
+      border-radius: .5rem;
+      height: 2rem;
+      width: 4rem;
+      margin: .25rem;
+      cursor: pointer;
+      &:hover {
+        color: lightgreen;
+      }
+    }
+  }
+}

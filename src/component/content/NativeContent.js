@@ -19,6 +19,7 @@ const Settings = lazy(() => import("../settings/pages/Settings"));
 const ProfileSettings = lazy(() => import("../settings/pages/ProfileSettings"));
 const NodeSettings = lazy(() => import("../settings/pages/NodeSettings"));
 const ContactSettings = lazy(() => import("../settings/pages/ContactSettings"));
+const DeveloperSettings = lazy(() => import("../settings/pages/DeveloperSettings"));
 
 const NativeContent = () => {
   const nodes = useSelector(state => state.content.nodes);
@@ -27,6 +28,7 @@ const NativeContent = () => {
   const profileRef = useRef();
   const nodesRef = useRef();
   const contactsRef = useRef();
+  const developerRef = useRef();
   const settingsRef = useRef();
   const downloadsRef = useRef();
   const homeRef = useRef();
@@ -154,6 +156,24 @@ const NativeContent = () => {
               <NativeSettingsPage>
                 <Suspense fallback={<Loader />}>
                   <ContactSettings />
+                </Suspense>
+              </NativeSettingsPage>
+            </div>
+          </CSSTransition>
+        )}
+      </Route>
+      <Route path="/settings/developer" exact>
+        {({ match }) => (
+          <CSSTransition
+            nodeRef={developerRef}
+            in={match !== null}
+            unmountOnExit
+            timeout={500}
+            classNames="content-menu">
+            <div ref={developerRef} className="content-menu">
+              <NativeSettingsPage>
+                <Suspense fallback={<Loader />}>
+                  <DeveloperSettings />
                 </Suspense>
               </NativeSettingsPage>
             </div>

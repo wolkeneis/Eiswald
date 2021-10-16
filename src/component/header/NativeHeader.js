@@ -12,7 +12,7 @@ const NativeHeader = () => {
 
   return (
     <header className="NativeHeader">
-      <Route path={["/settings/profile", "/settings/nodes", "/settings/contacts"]} exact>
+      <Route path={["/settings/profile", "/settings/nodes", "/settings/contacts", "/settings/developer"]} exact>
         {({ match }) => (
           <CSSTransition
             nodeRef={back}

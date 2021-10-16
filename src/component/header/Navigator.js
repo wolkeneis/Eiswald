@@ -23,6 +23,7 @@ const Settings = lazy(() => import("../settings/pages/Settings"));
 const ProfileSettings = lazy(() => import("../settings/pages/ProfileSettings"));
 const NodeSettings = lazy(() => import("../settings/pages/NodeSettings"));
 const ContactSettings = lazy(() => import("../settings/pages/ContactSettings"));
+const DeveloperSettings = lazy(() => import("../settings/pages/DeveloperSettings"));
 
 const Navigator = () => {
   const windowSize = useWindowSize();
@@ -34,6 +35,7 @@ const Navigator = () => {
   const profileRef = useRef();
   const nodesRef = useRef();
   const contactsRef = useRef();
+  const developerRef = useRef();
   const settingsRef = useRef();
 
   const onClick = () => {
@@ -165,6 +167,25 @@ const Navigator = () => {
                       <span>Back</span>
                     </BackButton>
                     <ContactSettings />
+                  </Suspense>
+                </div>
+              </CSSTransition>
+            )}
+          </Route>
+          <Route path="/settings/developer" exact>
+            {({ match }) => (
+              <CSSTransition
+                nodeRef={developerRef}
+                in={match !== null}
+                unmountOnExit
+                timeout={500}
+                classNames="secondary-menu">
+                <div ref={developerRef} className="secondary-menu">
+                  <Suspense fallback={<Loader />}>
+                    <BackButton linkName="Back to Settings" imageAlt="Back" imageSource={backIcon} destination="/settings">
+                      <span>Back</span>
+                    </BackButton>
+                    <DeveloperSettings />
                   </Suspense>
                 </div>
               </CSSTransition>
