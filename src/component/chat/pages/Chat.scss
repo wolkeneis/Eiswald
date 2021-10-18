@@ -38,10 +38,9 @@
       margin-top: .25rem;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
       span {
         max-width: 100%;
-        overflow: hidden;
+        text-align: start;
       }
       p {
         font-size: .68rem;
