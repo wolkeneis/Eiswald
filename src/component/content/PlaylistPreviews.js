@@ -19,15 +19,9 @@ const PlaylistPreviews = ({ nodes }) => {
     }, 500);
   }
 
-  const onSearch = (event) => {
-    event.target.scrollIntoView({
-      behavior: "smooth"
-    });
-  }
-
   return (
     <>
-      <SearchBox onChange={onChange} onSearch={onSearch} />
+      <SearchBox onChange={onChange} />
       <div className="PlaylistPreviews">
         {playlistPreviews &&
           playlistPreviews.length !== 0 &&
@@ -51,17 +45,24 @@ PlaylistPreviews.propTypes = {
   nodes: PropTypes.object
 }
 
-const SearchBox = ({ onChange, onSearch }) => {
+const SearchBox = ({ onChange }) => {
+  const searchBox = useRef();
+  
+  const onSearch = () => {
+    searchBox.current.scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+
   return (
-    <div className="SearchBox">
+    <div ref={searchBox} className="SearchBox">
       <input aria-label="Search Filter" placeholder="Search..." type="search" onChange={onChange} onClick={onSearch} />
     </div>
   );
 }
 
 SearchBox.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  onSearch: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired
 }
 
 const PlaylistPreview = ({ node, playlistPreview }) => {
