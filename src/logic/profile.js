@@ -1,5 +1,6 @@
 import discordIcon from "../media/discord.svg";
 import githubIcon from "../media/github.png";
+import twitterIcon from "../media/twitter.svg";
 import { wrapPromise } from "./utils";
 
 
@@ -14,6 +15,11 @@ const providers = [
     name: "Github",
     icon: githubIcon
   },
+  {
+    id: "twitter",
+    name: "Twitter",
+    icon: twitterIcon
+  }
 ];
 
 function fetchAvatar(avatar) {
