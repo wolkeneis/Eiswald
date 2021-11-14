@@ -1,6 +1,7 @@
 import englandIcon from "../media/languages/england.svg";
 import germanyIcon from "../media/languages/germany.svg";
 import japanIcon from "../media/languages/japan.svg";
+import chinaIcon from "../media/languages/china.svg";
 import { wrapPromise } from "./utils";
 
 const fetchNodeState = (origin) => {
@@ -66,7 +67,7 @@ function languageImage(language) {
 }
 
 function languageIndexImage(language) {
-  return `${language}` === "0" ? germanyIcon : `${language}` === "1" ? japanIcon : `${language}` === "2" ? englandIcon : undefined;
+  return `${language}` === "0" ? germanyIcon : `${language}` === "1" ? japanIcon : `${language}` === "2" ? englandIcon : `${language}` === "3" ? chinaIcon : undefined;
 }
 
 function languageAlt(language) {
@@ -78,7 +79,7 @@ function languageAlt(language) {
 }
 
 function languageIndexAlt(language) {
-  return `${language}` === "0" ? "German" : `${language}` === "1" ? "Japanese" : `${language}` === "2" ? "English" : undefined;
+  return `${language}` === "0" ? "German" : `${language}` === "1" ? "Japanese" : `${language}` === "2" ? "English" : `${language}` === "3" ? "Chinese" : undefined;
 }
 
 function seasonName(season) {
