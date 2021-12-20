@@ -2,8 +2,8 @@ import { wrapPromise } from "./utils";
 
 function fetchClients() {
   return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/clients`, {
-    credentials: "include",
-    redirect: "manual"
+    method: "POST",
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(clients => clients)
@@ -12,8 +12,8 @@ function fetchClients() {
 
 function fetchClient(clientId) {
   return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/api/client/${clientId}`, {
-    credentials: "include",
-    redirect: "manual"
+    method: "POST",
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(client => client)
@@ -24,7 +24,6 @@ function createClient(name, redirectUri) {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/api/client/create`, {
     method: "POST",
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
     },
@@ -42,7 +41,6 @@ function updateClientName(clientId, name) {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/api/client/${clientId}/name`, {
     method: "POST",
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
     },
@@ -56,7 +54,6 @@ function updateRedirectUri(clientId, redirectUri) {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/api/client/${clientId}/redirectUri`, {
     method: "POST",
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
     },
@@ -70,7 +67,6 @@ function regenerateSecret(clientId) {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/api/client/${clientId}/secret`, {
     method: "POST",
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
     },

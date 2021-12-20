@@ -60,7 +60,7 @@ const NativeHeader = () => {
           </CSSTransition>
         )}
       </Route>
-      <Route path={["/", "/downloads", "/chat", "/chat/authenticate", "/settings", "/authorize"]} exact>
+      <Route path={["/", "/chat", "/chat/authenticate", "/settings", "/authorize"]} exact>
         {({ match }) => (
           <CSSTransition
             nodeRef={branding}

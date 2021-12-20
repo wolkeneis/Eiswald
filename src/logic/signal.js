@@ -2,7 +2,6 @@ import { SecureStoragePlugin } from "capacitor-secure-storage-plugin";
 import E2E from "e2e-encryption";
 import forge from "node-forge";
 import { io } from "socket.io-client";
-import { decodeBase64, encodeBase64 } from "tweetnacl-util";
 import { setPacket, setPrivateKey, setProfile, setPublicKey, setUser } from "../redux/socialSlice";
 import store from "../redux/store";
 import { wrapPromise } from "./utils";
@@ -117,8 +116,7 @@ async function decryptKeyPair(encryptedKeyPair, password) {
 function fetchProfile() {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile`, {
     method: "POST",
-    credentials: "include",
-    redirect: "manual"
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(profile => {
@@ -133,8 +131,8 @@ function fetchUserProfile(userId) {
     return users[userId];
   } else {
     return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/api/user/${userId}/profile`, {
-      credentials: "include",
-      redirect: "manual"
+      method: "POST",
+      credentials: "include"
     }))
       .then(response => response.json())
       .then(profile => {
@@ -149,8 +147,8 @@ function fetchUserProfile(userId) {
 function fetchContacts() {
   const users = store.getState().social.users;
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/contacts`, {
-    credentials: "include",
-    redirect: "manual"
+    method: "POST",
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(contacts => {
@@ -221,7 +219,6 @@ function uploadKeyPair(keyPair) {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/key`, {
     method: "POST",
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
     },
@@ -231,8 +228,7 @@ function uploadKeyPair(keyPair) {
 
 function fetchKeyPair() {
   return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/key`, {
-    credentials: "include",
-    redirect: "manual"
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(encryptedKeyPair => encryptedKeyPair));
@@ -277,11 +273,11 @@ function decryptPrivateKey(keyPair, password) {
 }
 
 function encode64(bytes) {
-  return encodeBase64(Buffer.from(bytes));
+  return Buffer.from(bytes).toString('base64');
 }
 
 function decode64(base64) {
-  return Buffer.from(decodeBase64(base64)).toString();
+  return Buffer.from(base64, 'base64').toString();
 }
 
 export { initializeKeys, generateKeys, decryptKeyPair, fetchKeyPair, storeKeyPair, fetchProfile, fetchPackets, fetchContacts, fetchAvatar, sendPacket };

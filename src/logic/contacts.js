@@ -4,8 +4,8 @@ import { wrapPromise } from "./utils";
 
 function fetchContacts() {
   return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/contacts`, {
-    credentials: "include",
-    redirect: "manual"
+    method: "POST",
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(contacts => contacts)
@@ -14,8 +14,8 @@ function fetchContacts() {
 
 function fetchUserProfile(userId) {
   return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/api/user/${userId}/profile`, {
-    credentials: "include",
-    redirect: "manual"
+    method: "POST",
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(profile => {
@@ -39,7 +39,6 @@ function addContact(userId) {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/addcontact`, {
     method: "POST",
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
     },
@@ -53,7 +52,6 @@ function removeContact(userId) {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/removecontact`, {
     method: "POST",
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
     },

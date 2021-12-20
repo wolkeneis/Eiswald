@@ -34,8 +34,7 @@ function fetchAvatar(avatar) {
 function fetchProfile() {
   return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile`, {
     method: "POST",
-    credentials: "include",
-    redirect: "manual"
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(profile => profile)
@@ -46,7 +45,6 @@ function updatePrivacy(privateProfile) {
   return fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/privacy`, {
     method: "POST",
     credentials: "include",
-    redirect: "manual",
     headers: {
       "Content-Type": "application/json",
     },
@@ -61,8 +59,7 @@ function updatePrivacy(privateProfile) {
 function fetchProfileConnections() {
   return wrapPromise(fetch(new Request(`${process.env.REACT_APP_WALDERDE_NODE || "https://walderde.wolkeneis.dev"}/profile/connections`, {
     method: "POST",
-    credentials: "include",
-    redirect: "manual"
+    credentials: "include"
   }))
     .then(response => response.json())
     .then(connections => connections)

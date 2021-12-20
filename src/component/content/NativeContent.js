@@ -30,7 +30,6 @@ const NativeContent = () => {
   const contactsRef = useRef();
   const developerRef = useRef();
   const settingsRef = useRef();
-  const downloadsRef = useRef();
   const homeRef = useRef();
   const watchRef = useRef();
   const dispatch = useDispatch();
@@ -194,20 +193,6 @@ const NativeContent = () => {
                   <Settings />
                 </Suspense>
               </NativeSettingsPage>
-            </div>
-          </CSSTransition>
-        )}
-      </Route>
-      <Route path={"/downloads"} exact>
-        {({ match }) => (
-          <CSSTransition
-            nodeRef={downloadsRef}
-            in={match !== null}
-            unmountOnExit
-            timeout={500}
-            classNames="content-menu">
-            <div ref={downloadsRef} className="content-menu">
-              Downloads!
             </div>
           </CSSTransition>
         )}

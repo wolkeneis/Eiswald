@@ -10,6 +10,7 @@
   .ChatOverview {
     border-right: 2px solid var(--color-accent);
     padding: .75rem;
+    overflow-y: scroll;
   }
   .Chat {
     padding: .75rem;

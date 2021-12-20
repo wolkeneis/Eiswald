@@ -5,7 +5,9 @@ import chinaIcon from "../media/languages/china.svg";
 import { wrapPromise } from "./utils";
 
 const fetchNodeState = (origin) => {
-  return fetch(new Request(origin))
+  return fetch(new Request(origin, {
+    redirect: "manual"
+  }))
     .then(response => response.json());
 }
 
@@ -20,14 +22,16 @@ const fetchNodeProfile = (origin) => {
 const fetchPlaylists = (node) => {
   return fetch(node.origin + "/content/playlists/", {
     importance: "high",
-    credentials: "include"
+    credentials: "include",
+    redirect: "manual"
   });
 }
 
 function fetchThumbnail(node, key) {
   return wrapPromise(fetch(node.origin + "/content/thumbnail/" + key, {
     importance: "low",
-    credentials: "include"
+    credentials: "include",
+    redirect: "manual"
   })
     .then(response => response.blob())
     .then(image => URL.createObjectURL(image)));
@@ -36,13 +40,15 @@ function fetchThumbnail(node, key) {
 function fetchPlaylist(node, key) {
   return fetch(node.origin + "/content/playlist/" + key, {
     importance: "high",
-    credentials: "include"
+    credentials: "include",
+    redirect: "manual"
   });
 }
 
 function fetchAvatar(avatar) {
   return wrapPromise(fetch(avatar, {
-    importance: "low"
+    importance: "low",
+    redirect: "manual"
   })
     .then(response => response.blob())
     .then(image => URL.createObjectURL(image)));
