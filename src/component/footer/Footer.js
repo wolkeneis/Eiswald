@@ -3,7 +3,7 @@ import "./Footer.scss";
 const Footer = () => {
   return (
     <footer className="Footer">
-      <p>Wolkeneis, Copyright &copy; 2021</p>
+      <p>Wolkeneis, Copyright &copy; 2022</p>
     </footer>
   );
 }
